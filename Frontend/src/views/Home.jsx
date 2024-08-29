@@ -5,12 +5,28 @@ import Col from 'react-bootstrap/Col';
 import { CarruselUno } from '../components/carrusel.jsx';
 import ProDestacados from '../components/Destacados.jsx';
 
-import { AwardFill } from 'react-bootstrap-icons';
-import { Backpack3 } from 'react-bootstrap-icons';
-import { Bicycle } from 'react-bootstrap-icons';
-import { ClockFill } from 'react-bootstrap-icons';
+import { AwardFill, Backpack3, Bicycle, ClockFill } from 'react-bootstrap-icons';
+import axios from 'axios'
+import Context from '../context/Context.jsx'
+import { useContext, useEffect } from 'react';
+import { ENDPOINT } from '../config/constantes.jsx'
 
 const Home = () => {
+    const { setNuevoUsuario } = useContext(Context)
+
+    const getUserData = () => {
+    const token = window.sessionStorage.getItem('token')
+    if (token) {
+        axios.get(ENDPOINT.users, { headers: { Authorization: `Bearer ${token}` } })
+        .then(({ data: [user] }) => setNuevoUsuario({ ...user }))
+        .catch(() => {
+            window.sessionStorage.removeItem('token')
+            setNuevoUsuario(null)
+        })
+    }
+}
+
+useEffect(getUserData, [])
 
     return (
         <Container fluid>
