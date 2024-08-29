@@ -36,27 +36,27 @@ const Profile = () => {
       <h1 className='d-flex justify-content-center pt-4'>Bienvenido a RestartOcean</h1>
 
       <div className='contenidoMiPerfil'>
-        <MDBCard className="w-50 p-3 m-5" >
+        <MDBCard className='w-50 p-3 m-5'>
           <MDBCardHeader><MDBCardTitle>Mis Datos Personales:</MDBCardTitle></MDBCardHeader>
-          <MDBCardBody >
+          <MDBCardBody>
             <div className='container'>
               <div>
-                <MDBCardSubTitle className="subtituloPerfil fw-bold">Nombre:</MDBCardSubTitle>
+                <MDBCardSubTitle className='subtituloPerfil fw-bold'>Nombre:</MDBCardSubTitle>
                 <MDBCardText>{getNuevoUsuario?.nombre}</MDBCardText>
               </div>
               <div>
-                <MDBCardSubTitle className="subtituloPerfil fw-bold">Apellido:</MDBCardSubTitle>
+                <MDBCardSubTitle className='subtituloPerfil fw-bold'>Apellido:</MDBCardSubTitle>
                 <MDBCardText>{getNuevoUsuario?.apellido}</MDBCardText>
               </div>
             </div>
 
             <div className='container'>
               <div className='mt-3'>
-                <MDBCardSubTitle className="subtituloPerfil fw-bold">Email:</MDBCardSubTitle>
+                <MDBCardSubTitle className='subtituloPerfil fw-bold'>Email:</MDBCardSubTitle>
                 <MDBCardText>{getNuevoUsuario?.email}</MDBCardText>
               </div>
               <div className='mt-3'>
-                <MDBCardSubTitle className="subtituloPerfil fw-bold">Teléfono:</MDBCardSubTitle>
+                <MDBCardSubTitle className='subtituloPerfil fw-bold'>Teléfono:</MDBCardSubTitle>
                 <MDBCardText>{getNuevoUsuario?.telefono}</MDBCardText>
               </div>
             </div>
@@ -66,11 +66,11 @@ const Profile = () => {
           </div>
         </MDBCard>
 
-          <img
-            src='/img/3.jpg'
-            className='imgPerfil img-fluid rounded'
-            alt='example'
-          />
+        <img
+          src='/img/3.jpg'
+          className='imgPerfil img-fluid rounded'
+          alt='example'
+        />
 
       </div>
     </div>
