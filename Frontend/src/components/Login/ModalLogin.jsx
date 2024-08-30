@@ -1,27 +1,27 @@
-import { useEffect, useRef, useState } from 'react';
-import Pills from './Pills';
+import { useEffect, useRef, useState } from 'react'
+import Pills from './Pills'
 import {
   MDBBtn,
   MDBModal,
   MDBModalDialog,
   MDBModalContent,
   MDBModalBody,
-  MDBModalFooter,
-} from 'mdb-react-ui-kit';
+  MDBModalFooter
+} from 'mdb-react-ui-kit'
 
 const ModalLogin = () => {
-  const [open, setOpen] = useState(false);
-  const inputRef = useRef(null);
+  const [open, setOpen] = useState(false)
+  const inputRef = useRef(null)
 
   useEffect(() => {
     if (open) {
-      inputRef.current?.focus();
+      inputRef.current?.focus()
     }
-  }, [open]);
+  }, [open])
 
   return (
     <>
-      <MDBBtn style={{zIndex: 20}} onClick={() => setOpen(!open)}>Login</MDBBtn>
+      <MDBBtn style={{ zIndex: 20 }} onClick={() => setOpen(!open)}>Login</MDBBtn>
       <MDBModal open={open} setOpen={setOpen} tabIndex={-1}>
         <MDBModalDialog>
           <MDBModalContent>
@@ -39,7 +39,7 @@ const ModalLogin = () => {
         </MDBModalDialog>
       </MDBModal>
     </>
-  );
+  )
 }
 
-export default ModalLogin;
+export default ModalLogin

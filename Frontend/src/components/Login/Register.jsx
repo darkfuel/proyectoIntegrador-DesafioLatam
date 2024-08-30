@@ -1,4 +1,4 @@
-import  { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { MDBInput, MDBCol, MDBRow, MDBCheckbox, MDBBtn, MDBIcon } from 'mdb-react-ui-kit'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
@@ -70,10 +70,10 @@ const Register = ({ setBasicActive }) => {
     axios.post('http://localhost:3005/users', userToSend)
       .then(() => {
         Swal.fire({
-          title: "Good job!",
-          text: "Usuario registrado con éxito!",
-          icon: "success"
-        });
+          title: 'Good job!',
+          text: 'Usuario registrado con éxito!',
+          icon: 'success'
+        })
         setBasicActive('iniciar sesion')
       })
       .catch(error => {

@@ -8,7 +8,8 @@ import Navbar from 'react-bootstrap/Navbar'
 
 const Navigation = () => {
   const navigate = useNavigate()
-  const { getNuevoUsuario, setNuevoUsuario } = useContext(Context)
+  const { getNuevoUsuario, setNuevoUsuario, cart } = useContext(Context)
+  const total = cart.reduce((acum, actualValu) => acum + actualValu.price * actualValu.count, 0)
 
   const logout = () => {
     setNuevoUsuario()
@@ -50,7 +51,7 @@ const Navigation = () => {
               Productos
             </NavLink>
             <NavLink className={claseActive} to='/Carrito'>
-              Carrito
+              Carrito: <strong>${total}</strong>
             </NavLink>
             <div style={{ marginLeft: '30px' }}>
               {isLogin()}
