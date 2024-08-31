@@ -22,6 +22,15 @@ const Login = ({ setBasicActive }) => {
       [name]: value
     }))
   }
+
+  const handleClick = (valor) => {
+    if (valor === 'registrate') {
+      setBasicActive(valor);
+    } else {
+      console.error("Valor inválido");
+    }
+  }
+
   const handleForm = (e) => {
     e.preventDefault()
 
@@ -92,7 +101,7 @@ const Login = ({ setBasicActive }) => {
         <div className='text-center'>
           <p>
             ¿No estás registrado?
-            <a href='#' onClick={() => setBasicActive('registrate')}>
+            <a href="#" onClick={() => handleClick('registrate')}>
               Regístrate
             </a>
           </p>
