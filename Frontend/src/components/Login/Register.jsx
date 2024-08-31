@@ -1,11 +1,12 @@
 import  { useEffect, useState } from 'react'
-import { MDBInput, MDBCol, MDBRow, MDBCheckbox, MDBBtn, MDBIcon } from 'mdb-react-ui-kit'
+import { MDBInput, MDBCol, MDBRow, MDBBtn, MDBIcon } from 'mdb-react-ui-kit'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 
 const Register = ({ setBasicActive }) => {
   const navigate = useNavigate()
+  const state = 'iniciar sesion'
   const [user, setUser] = useState({
     nombre: '',
     apellido: '',
@@ -74,7 +75,7 @@ const Register = ({ setBasicActive }) => {
           text: "Usuario registrado con éxito!",
           icon: "success"
         });
-        setBasicActive('iniciar sesion')
+        state === 'iniciar sesion' ? setBasicActive(state) : console.error("Valor inválido para setBasicActive")
       })
       .catch(error => {
         // Manejo de error

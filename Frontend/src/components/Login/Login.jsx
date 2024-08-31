@@ -12,16 +12,25 @@ const Login = ({ setBasicActive }) => {
   const [user, setUser] = useState({
     email: "",
     password: "",
-  });
+  })
   const { setNuevoUsuario } = useContext(Context);
 
   const handleUser = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setUser((prevUser) => ({
       ...prevUser,
       [name]: value,
-    }));
-  };
+    }))
+  }
+
+  const handleClick = (valor) => {
+    if (valor === 'registrate') {
+      setBasicActive(valor);
+    } else {
+      console.error("Valor inválido");
+    }
+  }
+
   const handleForm = (e) => {
     e.preventDefault();
 
@@ -92,7 +101,7 @@ const Login = ({ setBasicActive }) => {
         <div className="text-center">
           <p>
             ¿No estás registrado?
-            <a href="#" onClick={() => setBasicActive("registrate")}>
+            <a href="#" onClick={() => handleClick('registrate')}>
               Regístrate
             </a>
           </p>
