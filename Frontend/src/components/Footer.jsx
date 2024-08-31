@@ -1,34 +1,107 @@
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import {
+  MDBFooter,
+  MDBContainer,
+  MDBRow,
+  MDBCol,
+  MDBIcon,
+} from "mdb-react-ui-kit";
 
-import { Whatsapp } from 'react-bootstrap-icons';
-import { Facebook } from 'react-bootstrap-icons';
-import { Instagram } from 'react-bootstrap-icons';
-import { TwitterX } from 'react-bootstrap-icons';
+export default function App() {
+  return (
+    <MDBFooter
+      className="text-center text-lg-start text-muted"
+      style={{ backgroundColor: " rgba(235, 235, 235, 0.778)" }}
+    >
+      <section className="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
+        <div className="me-5 d-none d-lg-block">
+          <span>Siguenos en redes sociales:</span>
+        </div>
 
-const Footer = () => {
+        <div>
+          <a href="" className="me-4 text-reset">
+            <MDBIcon fab icon="facebook-f" />
+          </a>
+          <a href="" className="me-4 text-reset">
+            <MDBIcon fab icon="twitter" />
+          </a>
+          <a href="" className="me-4 text-reset">
+            <MDBIcon fab icon="google" />
+          </a>
+          <a href="" className="me-4 text-reset">
+            <MDBIcon fab icon="instagram" />
+          </a>
+        </div>
+      </section>
 
-    const currentYear = new Date().getFullYear();
+      <section className="">
+        <MDBContainer className="text-center text-md-start mt-5">
+          <MDBRow className="mt-3">
+            <MDBCol md="3" lg="4" xl="3" className="mx-auto mb-4">
+              <h6 className="text-uppercase fw-bold mb-4">
+                <MDBIcon fas icon="bicycle" className="me-3" />
+                La Ruta
+              </h6>
+              <p>
+                Somo una tienda especializada en bicicletas y repuestos de alta
+                calidad, ofreciendo asesoramiento experto y productos de marcas
+                líderes para ciclistas de todos los niveles.
+              </p>
+            </MDBCol>
 
-    return (
-        <>
-            <Container fluid className='footer'>
-                    <Row>
-                        <Col xs={8}><Whatsapp color="white" size={96} className='m-3'/></Col>
-                        <Col xs={4}>
-                        <Facebook color="white" size={96} className='ms-5' />
-                        <Instagram color="white" size={96} className='ms-5'/>
-                        <TwitterX color="white" size={96} className='ms-5'/>
-                        </Col>
-                    </Row>
-                    <Row className='text-center mt-5 mb-5'>
-                        <Col><p>Nosotros {currentYear} | Todos los derechos reservados.</p></Col>
-                    </Row>
-            </Container>
+            <MDBCol md="2" lg="2" xl="2" className="mx-auto mb-4">
+              <h6 className="text-uppercase fw-bold mb-4">Categorías</h6>
+              <p>
+                <a href="#!" className="text-reset">
+                  Bicicletas
+                </a>
+              </p>
+              <p>
+                <a href="#!" className="text-reset">
+                  Cadenas
+                </a>
+              </p>
+              <p>
+                <a href="#!" className="text-reset">
+                  Cascos
+                </a>
+              </p>
+              <p>
+                <a href="#!" className="text-reset">
+                  Accesorios
+                </a>
+              </p>
+            </MDBCol>
 
-        </>
-    );
-};
+            <MDBCol md="4" lg="3" xl="3" className="mx-auto mb-md-0 mb-4">
+              <h6 className="text-uppercase fw-bold mb-4">Contacto</h6>
+              <p>
+                <MDBIcon icon="home" className="me-2" />
+                Santiago, Chile
+              </p>
+              <p>
+                <MDBIcon icon="envelope" className="me-3" />
+                Contacto@laruta.com
+              </p>
+              <p>
+                <MDBIcon icon="phone" className="me-3" /> + 56 9 2345 5678
+              </p>
+              <p>
+                <MDBIcon fab icon="instagram" className="me-3" /> @laRuta
+              </p>
+            </MDBCol>
+          </MDBRow>
+        </MDBContainer>
+      </section>
 
-export default Footer;
+      <div
+        className="text-center p-4"
+        style={{ backgroundColor: "rgba(0, 0, 0, 0.05)" }}
+      >
+        © 2024 Copyright:
+        <a className="text-reset fw-bold" href="https://mdbootstrap.com/">
+          LaRuta.com
+        </a>
+      </div>
+    </MDBFooter>
+  );
+}
