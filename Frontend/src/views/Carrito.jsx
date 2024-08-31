@@ -1,6 +1,8 @@
 import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Context from '../context/Context.jsx'
+import { Container } from 'react-bootstrap'
+import Payment from '../components/Payment.jsx'
 
 const Carrito = () => {
   const navigate = useNavigate()
@@ -12,9 +14,9 @@ const Carrito = () => {
   setTotal(totalCart)
 
   return (
-    <div className='container'>
+    <Container className='fluid m-3 text-center '>
       <h5>Detalle del Pedido</h5>
-      <div className='shadow-lg p-5 mb-3 bg-body-tertiary rounded'>
+      <div className=' fluid shadow-lg p-5 mb-3 bg-body-tertiary rounded'>
         {cart.map((producto, index) => (
           <div key={producto.id} className='d-flex justify-content-around'>
             <div className='d-flex'>
@@ -37,7 +39,8 @@ const Carrito = () => {
       <button className='btn btn-secondary' onClick={() => eraseCart()}>Limpiar</button>
       <button className='btn btn-info' onClick={() => navigate('/')}>Volver</button>
       <hr />
-    </div>
+      <Payment />
+    </Container>
   )
 }
 

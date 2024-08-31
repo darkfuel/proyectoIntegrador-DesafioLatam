@@ -1,6 +1,6 @@
 import './App.css'
 import { useState, useEffect } from 'react'
-import { BrowserRouter, Routes, Route, useNavigate, useParams } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Context from './context/Context'
 import Navigation from './components/Navigation'
 import Footer from './components/Footer'
@@ -36,12 +36,6 @@ function App () {
     }
   }
 
-  const getProduct = () => {
-    const { id } = useParams
-    const details = productos.find(item => item.id === id)
-    setProductDetails(details)
-  }
-
   const upCount = (index) => {
     cart[index].count++
     setCart([...cart])
@@ -68,8 +62,9 @@ function App () {
     productDetails,
     cart,
     setNuevoUsuario,
-    addProduct,
+    setProductDetails,
     setTotal,
+    addProduct,
     upCount,
     donwCount,
     eraseCart
@@ -77,7 +72,6 @@ function App () {
 
   useEffect(() => {
     getData()
-    getProduct()
   }, [])
 
   return (

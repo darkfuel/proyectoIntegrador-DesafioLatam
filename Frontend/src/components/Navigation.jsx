@@ -2,9 +2,8 @@ import { Link, useNavigate, NavLink } from 'react-router-dom'
 import Context from '../context/Context'
 import { useContext } from 'react'
 import ModalLogin from './Login/ModalLogin'
-import Container from 'react-bootstrap/Container'
-import Nav from 'react-bootstrap/Nav'
-import Navbar from 'react-bootstrap/Navbar'
+import { Container, Nav, Navbar } from 'react-bootstrap'
+import { Bicycle } from 'react-bootstrap-icons'
 
 const Navigation = () => {
   const navigate = useNavigate()
@@ -38,8 +37,9 @@ const Navigation = () => {
       <Container>
         <Navbar.Brand href='/'>
           <NavLink className={claseActive} to='/'>
-            Nuestro Logo
+            <Bicycle color='gray' size={50} className='ms-5' />
           </NavLink>
+          <h4>La Ruta</h4>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls='basic-navbar-nav' />
         <Navbar.Collapse id='basic-navbar-nav'>
