@@ -10,7 +10,9 @@ const Register = ({ setBasicActive }) => {
   const [user, setUser] = useState({
     nombre: '',
     apellido: '',
+    telefono: '',
     email: '',
+    direccion: '',
     password: '',
     confirmPassword: ''
   })
@@ -30,11 +32,15 @@ const Register = ({ setBasicActive }) => {
     const validadorCaracteres = /^[a-zA-Z\s]+$/
     const validadorPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/ // Expresión regular para la clave
     const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
+   const validadorTelefono = /^\+\d{1,11}$/
+
 
     if (
       !user?.nombre?.trim() ||
       !user?.apellido?.trim() ||
+      !user?.telefono?.trim() ||
       !user?.email?.trim() ||
+      !user?.direccion?.trim() ||
       !user?.password?.trim() ||
       !user?.confirmPassword?.trim()
     ) {
@@ -47,6 +53,10 @@ const Register = ({ setBasicActive }) => {
 
     if (!validadorCaracteres.test(user.apellido)) {
       return window.alert('El apellido solo puede contener letras')
+    }
+
+    if (!validadorTelefono.test(user.telefono)) {
+      return window.alert('El telefono solo puede contener números')
     }
 
     if (!emailRegex.test(user.email)) { // validar el formato de email
@@ -64,7 +74,9 @@ const Register = ({ setBasicActive }) => {
     const userToSend = {
       nombre: user.nombre,
       apellido: user.apellido,
+      telefono: user.telefono,
       email: user.email,
+      direccion: user.direccion,
       password: user.password
     }
 
@@ -117,6 +129,10 @@ const Register = ({ setBasicActive }) => {
         </MDBRow>
 
         <MDBInput className='mb-4' type='email' id='email' name='email' autoComplete='email' label='Email' value={user.email} onChange={handleUser} />
+        
+        <MDBInput className='mb-4' type='telefono' id='telefono' name='telefono' autoComplete='telefono' label='Teléfono' value={user.telefono} onChange={handleUser} />
+
+        <MDBInput className='mb-4' type='direccion' id='direccion' name='direccion' autoComplete='direccion' label='Direccion' value={user.direccion} onChange={handleUser} />
 
         <MDBInput className='mb-4' type='password' id='password' name='password' autoComplete='new-password' label='Clave' value={user.password} onChange={handleUser} />
 
