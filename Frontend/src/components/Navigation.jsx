@@ -50,6 +50,17 @@ const Navigation = () => {
             <NavLink className={claseActive} to='/Productos'>
               Productos
             </NavLink>
+
+            {/* hay que eliminarlo, esto es solo para ver el componente */}
+            <NavLink className={claseActive} to='/perfil'>
+              Perfil
+            </NavLink>
+
+            {/* hay que eliminarlo, esto es solo para ver el componente */}
+            <NavLink className={claseActive} to='/nuevo-producto'>
+              Agregar producto
+            </NavLink>
+
             <NavLink className={claseActive} to='/Carrito'>
               Carrito: <strong>${total}</strong>
             </NavLink>

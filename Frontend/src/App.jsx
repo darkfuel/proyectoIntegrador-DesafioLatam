@@ -9,6 +9,8 @@ import Productos from './views/Productos'
 import Carrito from './views/Carrito'
 import NotFound from './views/NotFound'
 import Details from './views/Details'
+import Profile from './views/Profile/Profile'
+import NuevoProducto from './views/nuevoProducto/NuevoProducto'
 
 function App () {
   const [user, setUser] = useState(null)
@@ -83,6 +85,8 @@ function App () {
           <Route path='/productos' element={<Productos />} />
           <Route path='/productos/:id' element={<Details />} />
           <Route path='/Carrito' element={<Carrito />} />
+          <Route path='/perfil' element={<Profile />} />
+          <Route path='/nuevo-producto' element={<NuevoProducto />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
       </BrowserRouter>

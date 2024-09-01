@@ -1,30 +1,30 @@
 import { useContext, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+// import { useNavigate } from 'react-router-dom'
 import Context from '../../context/Context'
-import axios from 'axios'
+// import axios from 'axios'
 import './profile.css'
 import { MDBCard, MDBCardHeader, MDBCardSubTitle, MDBCardBody, MDBCardTitle, MDBCardText, MDBBtn } from 'mdb-react-ui-kit'
-import { ENDPOINT } from '../config/constantes'
+// import { ENDPOINT } from '../config/constantes'
 
 const Profile = () => {
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
   const { getNuevoUsuario, setNuevoUsuario } = useContext(Context)
 
   const getNuevoUsuarioData = () => {
-    const token = window.sessionStorage.getItem('token')
-    // extraigo el token del sesion storage
-    console.log('token front:', token) // para saber que está llegando el token
+  //   const token = window.sessionStorage.getItem('token')
+  //   // extraigo el token del sesion storage
+  //   console.log('token front:', token) // para saber que está llegando el token
 
-    axios.get(ENDPOINT.users, { headers: { Authorization: `Bearer ${token}` } })
-      // desde el endpoint envío la cabecera con el authorization con el token
-      .then(({ data: [user] }) => setNuevoUsuario({ ...user }))
-      // desde la petición, de data extraugo un arreglo con el usuario y actualizo el estado del nuevo usuario con user
-      .catch(({ response: { data } }) => {
-        console.error(data)
-        window.sessionStorage.removeItem('token')
-        setNuevoUsuario(null)
-        navigate('/')
-      })
+  //   axios.get(ENDPOINT.users, { headers: { Authorization: `Bearer ${token}` } })
+  //     // desde el endpoint envío la cabecera con el authorization con el token
+  //     .then(({ data: [user] }) => setNuevoUsuario({ ...user }))
+  //     // desde la petición, de data extraugo un arreglo con el usuario y actualizo el estado del nuevo usuario con user
+  //     .catch(({ response: { data } }) => {
+  //       console.error(data)
+  //       window.sessionStorage.removeItem('token')
+  //       setNuevoUsuario(null)
+  //       navigate('/')
+  //     })
   }
 
   useEffect(getNuevoUsuarioData, [])
@@ -33,7 +33,7 @@ const Profile = () => {
 
   return (
     <div className='miPerfil'>
-      <h1 className='d-flex justify-content-center pt-4'>Bienvenido a RestartOcean</h1>
+      <h1 className='d-flex justify-content-center pt-4'>Bienvenido a La Ruta!</h1>
 
       <div className='contenidoMiPerfil'>
         <MDBCard className='w-50 p-3 m-5'>
@@ -60,6 +60,11 @@ const Profile = () => {
                 <MDBCardText>{getNuevoUsuario?.telefono}</MDBCardText>
               </div>
             </div>
+
+            <div className='mt-3'>
+                <MDBCardSubTitle className='subtituloPerfil fw-bold'>Dirección:</MDBCardSubTitle>
+                <MDBCardText>{getNuevoUsuario?.direccion}</MDBCardText>
+              </div>
           </MDBCardBody>
           <div className='d-flex justify-content-center'>
             <MDBBtn className='w-50'>Actualizar datos</MDBBtn>
