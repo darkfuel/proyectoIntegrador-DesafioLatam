@@ -27,5 +27,8 @@
 }
 
 .imgPerfil{
-  width: 500px;
+  width: 600px;
+  margin-bottom: 40px;
+  margin-top: 20px;
+  box-shadow: 1px 1px 10px black;
 }

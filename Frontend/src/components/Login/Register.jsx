@@ -129,7 +129,7 @@ const Register = ({ setBasicActive }) => {
         </MDBRow>
 
         <MDBInput className='mb-4' type='email' id='email' name='email' autoComplete='email' label='Email' value={user.email} onChange={handleUser} />
-        
+
         <MDBInput className='mb-4' type='telefono' id='telefono' name='telefono' autoComplete='telefono' label='Teléfono' value={user.telefono} onChange={handleUser} />
 
         <MDBInput className='mb-4' type='direccion' id='direccion' name='direccion' autoComplete='direccion' label='Direccion' value={user.direccion} onChange={handleUser} />

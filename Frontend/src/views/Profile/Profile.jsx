@@ -1,33 +1,38 @@
 import { useContext, useEffect } from 'react'
-// import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import Context from '../../context/Context'
-// import axios from 'axios'
+import axios from 'axios'
 import './profile.css'
 import { MDBCard, MDBCardHeader, MDBCardSubTitle, MDBCardBody, MDBCardTitle, MDBCardText, MDBBtn } from 'mdb-react-ui-kit'
-// import { ENDPOINT } from '../config/constantes'
+import { ENDPOINT } from "../../config/constantes"
 
 const Profile = () => {
   // const navigate = useNavigate()
   const { getNuevoUsuario, setNuevoUsuario } = useContext(Context)
 
   const getNuevoUsuarioData = () => {
-  //   const token = window.sessionStorage.getItem('token')
-  //   // extraigo el token del sesion storage
-  //   console.log('token front:', token) // para saber que está llegando el token
+    const token = window.sessionStorage.getItem('token')
+    console.log('token front:', token)
 
-  //   axios.get(ENDPOINT.users, { headers: { Authorization: `Bearer ${token}` } })
-  //     // desde el endpoint envío la cabecera con el authorization con el token
-  //     .then(({ data: [user] }) => setNuevoUsuario({ ...user }))
-  //     // desde la petición, de data extraugo un arreglo con el usuario y actualizo el estado del nuevo usuario con user
-  //     .catch(({ response: { data } }) => {
-  //       console.error(data)
-  //       window.sessionStorage.removeItem('token')
-  //       setNuevoUsuario(null)
-  //       navigate('/')
-  //     })
+    axios.get(ENDPOINT.users, { headers: { Authorization: `Bearer ${token}` } })
+      .then(({ data: [user] }) => setNuevoUsuario({ ...user }))
+      .catch(({ response: { data } }) => {
+        console.error(data)
+        window.sessionStorage.removeItem('token')
+        setNuevoUsuario(null)
+        navigate('/')
+      })
   }
 
   useEffect(getNuevoUsuarioData, [])
+
+  // window.sessionStorage.setItem('userId', getNuevoUsuario.id)
+  // const idUser = sessionStorage.getItem('userId')
+  // if (idUser) {
+  //   console.log('ID encontrado desde perfil:', idUser)
+  // } else {
+  //   console.log('No se encontró ningún ID en sessionStorage')
+  // }
 
   console.log(getNuevoUsuario)
 
@@ -66,13 +71,10 @@ const Profile = () => {
                 <MDBCardText>{getNuevoUsuario?.direccion}</MDBCardText>
               </div>
           </MDBCardBody>
-          <div className='d-flex justify-content-center'>
-            <MDBBtn className='w-50'>Actualizar datos</MDBBtn>
-          </div>
         </MDBCard>
 
         <img
-          src='/img/3.jpg'
+          src='/img/mapa.png'
           className='imgPerfil img-fluid rounded'
           alt='example'
         />
