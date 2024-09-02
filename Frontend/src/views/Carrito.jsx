@@ -15,10 +15,10 @@ const Carrito = () => {
   setTotal(totalCart);
 
   return (
-    <div>
-      <h5>Detalle del Pedido</h5>
+    <div className="w-100">
+      <h5 className="m-5">Detalle del Pedido:</h5>
       <Container className="fluid m-3 text-center d-flex flex-row gap-5 justify-content-between">
-        <div className=" fluid shadow-lg p-5 mb-3 bg-body-tertiary rounded">
+        <div className=" fluid w-100 shadow-lg p-5 mb-3 bg-body-tertiary rounded">
           {cart.map((producto, index) => (
             <div key={producto.id} className="d-flex justify-content-around">
               <div className="d-flex">
@@ -29,16 +29,16 @@ const Carrito = () => {
               </div>
               <div className="ms-5 m-3">
                 <p>Precio : {producto.price}</p>
-                <div className="d-flex">
+                <div className="d-flex gap-3">
                   <button
                     className="btn btn-success"
                     onClick={() => upCount(index)}
                   >
                     +
                   </button>
-                  <p>{producto.count}</p>
+                  <p size="5" aria-label="size 4 select example">{producto.count}</p>
                   <button
-                    className="btn btn-danger"
+                    className="btn btn-danger "
                     onClick={() => donwCount(index)}
                   >
                     -
@@ -50,7 +50,7 @@ const Carrito = () => {
           ))}
         </div>
 
-        <div>
+        <div className="w-25">
           <h2>Total: {total}</h2>
           <button className="btn btn-secondary" onClick={() => eraseCart()}>
             Limpiar
