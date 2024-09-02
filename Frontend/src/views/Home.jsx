@@ -2,7 +2,7 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
-import { CarruselUno } from '../components/carrusel.jsx'
+import { CarruselUno } from '../components/carrusel/carrusel.jsx'
 import ProDestacados from '../components/Destacados.jsx'
 
 import { AwardFill, Backpack3, Bicycle, ClockFill } from 'react-bootstrap-icons'

@@ -18,11 +18,11 @@ CREATE TABLE usuarios (
 CREATE TABLE productos (
     id SERIAL PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
-    descripcion TEXT,
     precio INT NOT NULL,
-    img VARCHAR(1000) NOT NULL,
     stock INT NOT NULL,
-    likes INT,
+    descripcion TEXT,
+    img VARCHAR(1000) NOT NULL,
+    likes INT DEFAULT 0,
     creado_por INT NOT NULL REFERENCES usuarios(id),
     fecha_creacion timestamp with time zone default now()
     );

@@ -13,6 +13,7 @@ const Navigation = () => {
   const logout = () => {
     setNuevoUsuario()
     window.sessionStorage.removeItem('token')
+    window.sessionStorage.removeItem('userId')
     navigate('/')
   }
 
@@ -21,12 +22,23 @@ const Navigation = () => {
       return <ModalLogin />
     }
 
-    return (
-      <>
-        <Link to='/perfil' className='btn m-1 btn-light'>Mi Perfil</Link>
-        <button onClick={logout} className='btn btn-danger'>Salir</button>
-      </>
-    )
+    if (getNuevoUsuario.is_admin) {
+      return (
+        <>
+        <NavLink to='/nuevo-producto'> Agregar producto </NavLink>
+          <Link to='/perfil' className='btn m-1 btn-light'>Mi Perfil</Link>
+          <button onClick={logout} className='btn btn-danger'>Salir</button>
+        </>
+      )
+    } else {
+      return (
+        <>
+          <Link to='/perfil' className='btn m-1 btn-light'>Mi Perfil</Link>
+          <button onClick={logout} className='btn btn-danger'>Salir</button>
+        </>
+      )
+    }
+
   }
 
   const claseActive = ({ isActive }) =>
@@ -64,6 +76,7 @@ const Navigation = () => {
             <NavLink className={claseActive} to='/Carrito'>
               Carrito: <strong>${total}</strong>
             </NavLink>
+
             <div style={{ marginLeft: '30px' }}>
               {isLogin()}
             </div>
