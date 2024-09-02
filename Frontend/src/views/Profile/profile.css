@@ -5,7 +5,7 @@
   background-color: antiquewhite;
 }
 
-.container {
+.containerDatosPerfil {
   display: flex;
   flex-wrap: wrap; /* Permite que los elementos se envuelvan si no hay suficiente espacio */
   gap: 10px;

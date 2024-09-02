@@ -44,7 +44,7 @@ const Profile = () => {
         <MDBCard className='w-50 p-3 m-5'>
           <MDBCardHeader><MDBCardTitle>Mis Datos Personales:</MDBCardTitle></MDBCardHeader>
           <MDBCardBody>
-            <div className='container'>
+            <div className='containerDatosPerfil'>
               <div>
                 <MDBCardSubTitle className='subtituloPerfil fw-bold'>Nombre:</MDBCardSubTitle>
                 <MDBCardText>{getNuevoUsuario?.nombre}</MDBCardText>
