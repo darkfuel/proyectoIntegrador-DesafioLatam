@@ -1,13 +1,14 @@
 import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import Context from '../context/UserContext.jsx'
 import { Container, Row, Card, Button } from 'react-bootstrap/'
 import { ENDPOINT } from '../config/constantes.jsx'
 import cardData from '../../public/product.json'
 import ProductoFiltro from '../components/ProductoFiltro.jsx'
 import { ProductContext } from '../context/ProductContext.jsx'
+import UserContext from '../context/UserContext.jsx'
 
 const Productos = () => {
+  const { getNuevoUsuario } = useContext(UserContext)
   const { addProduct } = useContext(ProductContext)
   const navigate = useNavigate()
   const [filtro, setFiltro] = useState('')
@@ -20,7 +21,16 @@ const Productos = () => {
     card.title.toLowerCase().includes(filtro.toLowerCase()) ||
     card.descripción.toLowerCase().includes(filtro.toLowerCase())
   )
-
+  const editar = () => {
+    if (getNuevoUsuario.is_admin) {
+      return (
+        <>
+          <Button>editar</Button>
+          <Button>eliminar</Button>
+        </>
+      )
+    }
+  }
   return (
     <Container fluid className='mb-5'>
       <Row className='fluid text-center mt-2 mb-2 justify-content-center'>
@@ -39,7 +49,7 @@ const Productos = () => {
                 <Card.Text>Precio: {card.price}</Card.Text>
                 <Button variant='info' onClick={() => navigate(`${ENDPOINT.detalle}/${card.id}`)}>Ver Detalle</Button>
                 <Button variant='secondary' onClick={() => addProduct(card)}>Agregar</Button>
-                <Button variant='secondary' onClick={() => navigate()}>Editar</Button>
+                {editar()}
               </Card.Body>
             </Card>
           </Container>
