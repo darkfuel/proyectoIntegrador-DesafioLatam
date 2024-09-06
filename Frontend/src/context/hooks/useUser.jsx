@@ -6,8 +6,9 @@ const useUser = () => {
   const setNuevoUsuario = (nuevoUsuario) => setUser(nuevoUsuario)
 
   return {
-    user,
-    setNuevoUsuario
+    getNuevoUsuario:
+      user,
+      setNuevoUsuario
   }
 }
 

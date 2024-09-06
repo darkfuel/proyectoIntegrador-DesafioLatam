@@ -1,13 +1,13 @@
 import { useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import Context from '../../context/Context'
+import Context from '../../context/UserContext'
 import axios from 'axios'
 import './profile.css'
 import { MDBCard, MDBCardHeader, MDBCardSubTitle, MDBCardBody, MDBCardTitle, MDBCardText, MDBBtn } from 'mdb-react-ui-kit'
 import { ENDPOINT } from "../../config/constantes"
 
 const Profile = () => {
-  // const navigate = useNavigate()
+  const navigate = useNavigate()
   const { getNuevoUsuario, setNuevoUsuario } = useContext(Context)
 
   const getNuevoUsuarioData = () => {
@@ -15,7 +15,11 @@ const Profile = () => {
     console.log('token front:', token)
 
     axios.get(ENDPOINT.users, { headers: { Authorization: `Bearer ${token}` } })
-      .then(({ data: [user] }) => setNuevoUsuario({ ...user }))
+    .then(({ data: [user] }) => {
+      console.log('User data:', user)  // Para verificar la estructura de la respuesta
+      setNuevoUsuario({ ...user })  // Si `data` es un objeto
+    })
+      // console.log('data perfil', user)
       .catch(({ response: { data } }) => {
         console.error(data)
         window.sessionStorage.removeItem('token')
@@ -23,7 +27,7 @@ const Profile = () => {
         navigate('/')
       })
   }
-
+  // window.sessionStorage.setItem('is_admin', user.is_admin)
   useEffect(getNuevoUsuarioData, [])
 
   // window.sessionStorage.setItem('userId', getNuevoUsuario.id)

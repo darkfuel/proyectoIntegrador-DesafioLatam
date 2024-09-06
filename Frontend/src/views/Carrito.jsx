@@ -1,13 +1,14 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import Context from "../context/Context.jsx";
+import Context from "../context/UserContext.jsx";
 import { Container } from "react-bootstrap";
 import Payment from "../components/Payment.jsx";
+import { ProductContext } from "../context/ProductContext.jsx";
 
 const Carrito = () => {
   const navigate = useNavigate();
   const { setTotal, total, cart, upCount, donwCount, eraseCart } =
-    useContext(Context);
+    useContext(ProductContext);
   const totalCart = cart.reduce(
     (acum, actualValu) => acum + actualValu.price * actualValu.count,
     0
