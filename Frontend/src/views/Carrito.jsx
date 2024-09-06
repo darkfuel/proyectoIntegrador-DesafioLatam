@@ -59,7 +59,7 @@ const Carrito = () => {
             Volver
           </button>
           <hr />
-          <Payment />
+          <Payment eraseCart={eraseCart} />
         </div>
       </Container>
     </div>
