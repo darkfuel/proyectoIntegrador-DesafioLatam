@@ -3,11 +3,14 @@ import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import Context from '../context/UserContext.jsx'
 
-const Payment = () => {
+const Payment = ({ eraseCart }) => {
   const [show, setShow] = useState(false)
   const { total } = useContext(Context)
 
-  const handleClose = () => setShow(false)
+  const handleClose = () => {
+    setShow(false)
+    eraseCart()
+  }
   const handleShow = () => setShow(true)
 
   return (

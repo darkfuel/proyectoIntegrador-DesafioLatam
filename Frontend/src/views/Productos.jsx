@@ -39,6 +39,7 @@ const Productos = () => {
                 <Card.Text>Precio: {card.price}</Card.Text>
                 <Button variant='info' onClick={() => navigate(`${ENDPOINT.detalle}/${card.id}`)}>Ver Detalle</Button>
                 <Button variant='secondary' onClick={() => addProduct(card)}>Agregar</Button>
+                <Button variant='secondary' onClick={() => navigate()}>Editar</Button>
               </Card.Body>
             </Card>
           </Container>
