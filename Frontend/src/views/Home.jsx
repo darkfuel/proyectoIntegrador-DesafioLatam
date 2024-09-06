@@ -7,7 +7,7 @@ import ProDestacados from '../components/Destacados.jsx'
 
 import { AwardFill, Backpack3, Bicycle, ClockFill } from 'react-bootstrap-icons'
 import axios from 'axios'
-import Context from '../context/Context.jsx'
+import Context from '../context/UserContext.jsx'
 import { useContext, useEffect } from 'react'
 import { ENDPOINT } from '../config/constantes.jsx'
 

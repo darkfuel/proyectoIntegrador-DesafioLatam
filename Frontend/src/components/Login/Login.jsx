@@ -1,9 +1,10 @@
 import { useContext, useState } from 'react'
 import { MDBInput, MDBBtn, MDBIcon } from 'mdb-react-ui-kit'
 import { useNavigate } from 'react-router-dom'
-import Context from '../../context/Context'
+import Context from '../../context/UserContext'
 import axios from 'axios'
 import Swal from 'sweetalert2'
+import { ENDPOINT } from '../../config/constantes'
 
 const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
 
@@ -46,9 +47,9 @@ const Login = ({ setBasicActive }) => {
     console.log(user.email)
     console.log(user.password)
 
-    axios
-      .post('http://localhost:3005/login', user)
+    axios.post(ENDPOINT.login, user)
       .then(({ data }) => {
+        console.log('data desde el login', data)
         window.sessionStorage.setItem('token', data.token)
         Swal.fire({
           title: 'Genial!',

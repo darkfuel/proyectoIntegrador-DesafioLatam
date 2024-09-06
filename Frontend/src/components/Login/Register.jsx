@@ -3,6 +3,7 @@ import { MDBInput, MDBCol, MDBRow, MDBBtn, MDBIcon } from 'mdb-react-ui-kit'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Swal from 'sweetalert2'
+import { ENDPOINT } from '../../config/constantes'
 
 const Register = ({ setBasicActive }) => {
   const navigate = useNavigate()
@@ -32,7 +33,7 @@ const Register = ({ setBasicActive }) => {
     const validadorCaracteres = /^[a-zA-Z\s]+$/
     const validadorPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/ // Expresión regular para la clave
     const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
-   const validadorTelefono = /^\+\d{1,11}$/
+    const validadorTelefono = /^\+\d{1,11}$/
 
 
     if (
@@ -80,7 +81,7 @@ const Register = ({ setBasicActive }) => {
       password: user.password
     }
 
-    axios.post('http://localhost:3005/users', userToSend)
+    axios.post(ENDPOINT.users, userToSend)
       .then(() => {
         Swal.fire({
           title: "Good job!",

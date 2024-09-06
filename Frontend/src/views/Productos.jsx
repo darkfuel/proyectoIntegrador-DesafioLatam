@@ -1,13 +1,14 @@
 import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import Context from '../context/Context.jsx'
+import Context from '../context/UserContext.jsx'
 import { Container, Row, Card, Button } from 'react-bootstrap/'
 import { ENDPOINT } from '../config/constantes.jsx'
 import cardData from '../../public/product.json'
 import ProductoFiltro from '../components/ProductoFiltro.jsx'
+import { ProductContext } from '../context/ProductContext.jsx'
 
 const Productos = () => {
-  const { addProduct } = useContext(Context)
+  const { addProduct } = useContext(ProductContext)
   const navigate = useNavigate()
   const [filtro, setFiltro] = useState('')
 

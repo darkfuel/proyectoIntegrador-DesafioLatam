@@ -1,7 +1,7 @@
 import './App.css'
-import { useState, useEffect } from 'react'
+// import { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Context from './context/Context'
+import UserContext from './context/UserContext'
 import Navigation from './components/Navigation'
 import Footer from './components/Footer'
 import Home from './views/Home'
@@ -11,73 +11,13 @@ import NotFound from './views/NotFound'
 import Details from './views/Details'
 import Profile from './views/Profile/Profile'
 import NuevoProducto from './views/nuevoProducto/NuevoProducto'
+import useUser from './context/hooks/useUser'
 
 function App () {
-  const [user, setUser] = useState(null)
-  const [total, setTotal] = useState(0)
-  const [productos, setProductos] = useState([])
-  const [productDetails, setProductDetails] = useState({})
-  const [cart, setCart] = useState([])
-
-  const setNuevoUsuario = (nuevoUsuario) => setUser(nuevoUsuario)
-
-  const getData = async () => {
-    const res = await fetch('/product.json')
-    const product = await res.json()
-    setProductos(product)
-  }
-
-  const addProduct = ({ id, price, title, img, descripción }) => {
-    const productAdded = cart.find((product) => product.id === id)
-    const newAdded = { id, price, title, img, descripción, count: 1 }
-    if (productAdded !== undefined) {
-      cart[cart.findIndex((product) => product.id === newAdded.id)].count++
-      setCart([...cart])
-    } else {
-      setCart([...cart, newAdded])
-    }
-  }
-
-  const upCount = (index) => {
-    cart[index].count++
-    setCart([...cart])
-  }
-
-  const donwCount = (index) => {
-    if (cart[index].count > 1) {
-      cart[index].count--
-      setCart([...cart])
-    } else {
-      cart.splice(index, 1)
-      setCart([...cart])
-    }
-  }
-
-  const eraseCart = () => {
-    setCart([])
-  }
-
-  const globalState = {
-    user,
-    total,
-    productos,
-    productDetails,
-    cart,
-    setNuevoUsuario,
-    setProductDetails,
-    setTotal,
-    addProduct,
-    upCount,
-    donwCount,
-    eraseCart
-  }
-
-  useEffect(() => {
-    getData()
-  }, [])
+  const globalState = useUser()
 
   return (
-    <Context.Provider value={globalState}>
+    <UserContext.Provider value={globalState}>
       <BrowserRouter>
         <Navigation />
         <Routes>
@@ -91,7 +31,8 @@ function App () {
         </Routes>
       </BrowserRouter>
       <Footer />
-    </Context.Provider>
+    </UserContext.Provider>
   )
 }
+
 export default App

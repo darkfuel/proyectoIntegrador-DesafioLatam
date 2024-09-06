@@ -1,12 +1,13 @@
 import { useContext, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import Context from '../context/Context.jsx'
+import Context from '../context/UserContext.jsx'
 import { Container, Row, Col, Card, Button } from 'react-bootstrap/'
 import { ENDPOINT } from '../config/constantes.jsx'
+import { ProductContext } from '../context/ProductContext.jsx'
 
 const Details = () => {
   const { id } = useParams()
-  const { productos, addProduct, productDetails, setProductDetails } = useContext(Context)
+  const { productos, addProduct, productDetails, setProductDetails } = useContext(ProductContext)
   const navigate = useNavigate()
   console.log(productDetails, 'detalle')
 
