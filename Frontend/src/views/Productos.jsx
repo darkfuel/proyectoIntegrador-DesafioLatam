@@ -6,11 +6,13 @@ import { ENDPOINT } from '../config/constantes.jsx'
 import cardData from '../../public/product.json'
 import ProductoFiltro from '../components/ProductoFiltro.jsx'
 import { ProductContext } from '../context/ProductContext.jsx'
+import UserContext from '../context/UserContext.jsx'
 
 const Productos = () => {
   const { addProduct } = useContext(ProductContext)
   const navigate = useNavigate()
   const [filtro, setFiltro] = useState('')
+  const { getNuevoUsuario } = useContext(UserContext)
 
   const handleFiltroChange = (texto) => {
     setFiltro(texto)
@@ -20,6 +22,17 @@ const Productos = () => {
     card.title.toLowerCase().includes(filtro.toLowerCase()) ||
     card.descripción.toLowerCase().includes(filtro.toLowerCase())
   )
+
+  const edit = (id) => {
+    if (getNuevoUsuario.is_admin) {
+      return (
+        <>
+          <Button>editar</Button>
+          <Button>eliminar</Button>
+        </>
+      )
+    }
+  }
 
   return (
     <Container fluid className='mb-5'>
@@ -39,7 +52,7 @@ const Productos = () => {
                 <Card.Text>Precio: {card.price}</Card.Text>
                 <Button variant='info' onClick={() => navigate(`${ENDPOINT.detalle}/${card.id}`)}>Ver Detalle</Button>
                 <Button variant='secondary' onClick={() => addProduct(card)}>Agregar</Button>
-                <Button variant='secondary' onClick={() => navigate()}>Editar</Button>
+                <div>{edit()}</div>
               </Card.Body>
             </Card>
           </Container>
