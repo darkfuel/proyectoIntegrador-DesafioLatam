@@ -1,5 +1,6 @@
-import { createContext, useEffect, useState } from "react"
-
+import axios from 'axios'
+import { createContext, useEffect, useState } from 'react'
+import { ENDPOINT } from '../config/constantes.jsx'
 export const ProductContext = createContext()
 
 const ProductProvider = ({ children }) => {
@@ -9,7 +10,7 @@ const ProductProvider = ({ children }) => {
   const [cart, setCart] = useState([])
 
   const getData = async () => {
-    const res = await fetch('/product.json')
+    const res = await fetch('http://localhost:3001/productos')
     const product = await res.json()
     setProductos(product)
   }
@@ -18,9 +19,9 @@ const ProductProvider = ({ children }) => {
     getData()
   }, [])
 
-  const addProduct = ({ id, price, title, img, descripción }) => {
+  const addProduct = ({ id, precio, nombre, img, descripcion }) => {
     const productAdded = cart.find((product) => product.id === id)
-    const newAdded = { id, price, title, img, descripción, count: 1 }
+    const newAdded = { id, precio, nombre, img, descripcion, count: 1 }
     if (productAdded !== undefined) {
       cart[cart.findIndex((product) => product.id === newAdded.id)].count++
       setCart([...cart])
@@ -28,6 +29,18 @@ const ProductProvider = ({ children }) => {
       setCart([...cart, newAdded])
     }
   }
+
+  const borrarProduct = ({ id }) => {
+    axios.delete(`${ENDPOINT.borrar}/${id}`)
+      .then(({ data }) => {
+        console.log('producto eliminado', data);
+        getData()
+      })
+      .catch(({ response: { data } }) => {
+        console.error(data);
+      });
+  };
+  
 
   const upCount = (index) => {
     cart[index].count++
@@ -58,7 +71,8 @@ const ProductProvider = ({ children }) => {
     addProduct,
     upCount,
     donwCount,
-    eraseCart
+    eraseCart,
+    borrarProduct
   }
 
   return (
@@ -68,4 +82,4 @@ const ProductProvider = ({ children }) => {
   )
 }
 
-export default ProductProvider;
+export default ProductProvider
