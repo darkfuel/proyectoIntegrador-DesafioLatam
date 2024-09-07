@@ -4,11 +4,13 @@ import { Container, Row, Card, Button } from 'react-bootstrap'
 import { ENDPOINT } from '../config/constantes.jsx'
 import ProductoFiltro from '../components/ProductoFiltro.jsx'
 import { ProductContext } from '../context/ProductContext.jsx'
+import UserContext from '../context/UserContext.jsx'
 
 const Productos = () => {
   const { addProduct, borrarProduct } = useContext(ProductContext)
   const navigate = useNavigate()
   const [filtro, setFiltro] = useState('')
+
   const [productos, setProductos] = useState([])
 
   useEffect(() => {
@@ -20,6 +22,9 @@ const Productos = () => {
       .catch(error => console.error('Error fetching data:', error))
   }, [])
 
+  const { getNuevoUsuario } = useContext(UserContext)
+
+
   const handleFiltroChange = (texto) => {
     setFiltro(texto)
   }
@@ -28,7 +33,18 @@ const Productos = () => {
     card.nombre.toLowerCase().includes(filtro.toLowerCase()) ||
     card.descripcion.toLowerCase().includes(filtro.toLowerCase())
   )
-  console.log('card es:', { Card })
+
+  const edit = (id) => {
+    if (getNuevoUsuario.is_admin) {
+      return (
+        <>
+          <Button>editar</Button>
+          <Button variant='danger' onClick={() => borrarProduct(card)}>borrar</Button>
+        </>
+      )
+    }
+  }
+
   return (
     <Container fluid className='mb-5'>
       <Row className='fluid text-center mt-2 mb-2 justify-content-center'>
@@ -47,8 +63,9 @@ const Productos = () => {
                 <Card.Text>Precio: {card.precio}</Card.Text>
                 <Button variant='info' onClick={() => navigate(`${ENDPOINT.detalle}/${card.id}`)}>Ver Detalle</Button>
                 <Button variant='secondary' onClick={() => addProduct(card)}>Agregar</Button>
-                <Button variant='secondary' onClick={() => navigate()}>Editar</Button>
-                <Button variant='danger' onClick={() => borrarProduct(card)}>borrar</Button>
+
+                <div>{edit()}</div>
+
               </Card.Body>
             </Card>
           </Container>
