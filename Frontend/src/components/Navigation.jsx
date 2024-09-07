@@ -1,4 +1,4 @@
-import { Link, useNavigate, NavLink } from 'react-router-dom'
+import { useNavigate, NavLink } from 'react-router-dom'
 import UserContext from '../context/UserContext'
 import { ProductContext } from '../context/ProductContext'
 import { useContext } from 'react'
@@ -32,9 +32,9 @@ const Navigation = () => {
           <NavLink className={claseActive} to='/nuevo-producto'>
             Agregar producto
           </NavLink>
-          <Link to='/perfil' className='btn m-1 btn-light'>
+          <NavLink to='/perfil' className={claseActive}>
             Mi Perfil Administrador
-          </Link>
+          </NavLink>
           <button onClick={logout} className='btn btn-danger'>
             Salir
           </button>

@@ -12,11 +12,8 @@ const Profile = () => {
 
   const getNuevoUsuarioData = () => {
     const token = window.sessionStorage.getItem('token')
-    console.log('token front:', token)
-
     axios.get(ENDPOINT.users, { headers: { Authorization: `Bearer ${token}` } })
     .then(({ data: [user] }) => {
-      console.log('User data:', user)  // Para verificar la estructura de la respuesta
       setNuevoUsuario({ ...user })  // Si `data` es un objeto
     })
       // console.log('data perfil', user)
@@ -27,18 +24,8 @@ const Profile = () => {
         navigate('/')
       })
   }
-  // window.sessionStorage.setItem('is_admin', user.is_admin)
+
   useEffect(getNuevoUsuarioData, [])
-
-  // window.sessionStorage.setItem('userId', getNuevoUsuario.id)
-  // const idUser = sessionStorage.getItem('userId')
-  // if (idUser) {
-  //   console.log('ID encontrado desde perfil:', idUser)
-  // } else {
-  //   console.log('No se encontró ningún ID en sessionStorage')
-  // }
-
-  console.log(getNuevoUsuario)
 
   return (
     <div className='miPerfil'>

@@ -4,10 +4,10 @@ import { MDBInput, MDBBtn } from "mdb-react-ui-kit";
 import Swal from "sweetalert2";
 import { ENDPOINT } from "../../config/constantes";
 import axios from "axios";
+import Compressor from 'compressorjs'
 
 const NuevoProducto = () => {
   const token = window.sessionStorage.getItem('token')
-  const userdId = sessionStorage.getItem('userId')
   console.log('token desde nuevo producto:', token)
 
   const defaultFile = "/img/imgNuevoProducto.png"
@@ -17,9 +17,9 @@ const NuevoProducto = () => {
     nombre: "",
     precio: "",
     stock: "",
-    descripcion: "",
-    creado_por: userdId
+    descripcion: ""
   })
+  const [file, setFile] = useState(null); // Para manejar el archivo
 
   const handleProduct = (e) => {
     const { name, value } = e.target;
@@ -30,18 +30,17 @@ const NuevoProducto = () => {
   }
 
   const handleFileChange = (e) => {
-    const file = e.target.files[0]
-    if (file) {
-      const reader = new FileReader()
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      setFile(selectedFile); // Guarda el archivo seleccionado
+      const reader = new FileReader();
       reader.onload = function (e) {
-        const imageSrc = e.target.result
-        setImgSrc(imageSrc)
+        setImgSrc(e.target.result);
       };
-      reader.readAsDataURL(file)
-    } else {
-      setImgSrc(defaultFile)
+      reader.readAsDataURL(selectedFile);
     }
   };
+
 
   const handleForm = (e) => {
     e.preventDefault()
@@ -66,18 +65,17 @@ const NuevoProducto = () => {
         text: "Precio y stock deben ser números",
       })
     }
-    const productoToSend = {
-      nombre: producto.nombre,
-      precio: producto.precio,
-      stock: producto.stock,
-      descripcion: producto.descripcion,
-      img: imgSrc,
-    }
-
-    console.log(productoToSend)
+    const formData = new FormData();
+    formData.append('nombre', producto.nombre);
+    formData.append('precio', producto.precio);
+    formData.append('stock', producto.stock);
+    formData.append('descripcion', producto.descripcion);
+    formData.append('img', file); // Añade el archivo al formulario
+    console.log(file)
+    console.log(formData)
 
     axios
-      .post(ENDPOINT.nuevoProducto, productoToSend,{ headers: { Authorization: `Bearer ${token}` } })
+      .post(ENDPOINT.nuevoProducto, formData,{ headers: { Authorization: `Bearer ${token}` } })
       .then(() => {
         Swal.fire({
           position: "top-end",
