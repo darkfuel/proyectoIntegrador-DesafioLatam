@@ -10,7 +10,7 @@ const ProductProvider = ({ children }) => {
   const [cart, setCart] = useState([])
 
   const getData = async () => {
-    const res = await fetch('http://localhost:3001/productos')
+    const res = await fetch('http://localhost:3000/productos')
     const product = await res.json()
     setProductos(product)
   }

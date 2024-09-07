@@ -13,33 +13,60 @@ const Productos = () => {
 
   const [productos, setProductos] = useState([])
 
+  console.log(productos)
+
   useEffect(() => {
-    fetch('http://localhost:3001/productos')
-      .then(response => response.json())
-      .then(data => {
+    fetch('http://localhost:3000/productos')
+      .then((response) => response.json())
+      .then((data) => {
         setProductos(data.rows || [])
       })
-      .catch(error => console.error('Error fetching data:', error))
+      .catch((error) => console.error('Error fetching data:', error))
   }, [])
 
   const { getNuevoUsuario } = useContext(UserContext)
-
 
   const handleFiltroChange = (texto) => {
     setFiltro(texto)
   }
 
-  const productosFiltrados = productos.filter(card =>
-    card.nombre.toLowerCase().includes(filtro.toLowerCase()) ||
-    card.descripcion.toLowerCase().includes(filtro.toLowerCase())
+  const productosFiltrados = productos.filter(
+    (card) =>
+      card.nombre.toLowerCase().includes(filtro.toLowerCase()) ||
+      card.descripcion.toLowerCase().includes(filtro.toLowerCase())
   )
 
-  const edit = (id) => {
-    if (getNuevoUsuario.is_admin) {
+  const botones = (id) => {
+    if (!getNuevoUsuario || !getNuevoUsuario.is_admin) {
       return (
         <>
+          <Button
+            variant='info'
+            onClick={() => navigate(`${ENDPOINT.detalle}/${card.id}`)}
+          >
+            Ver Detalle
+          </Button>
+          <Button variant='secondary' onClick={() => addProduct(card)}>
+            Agregar
+          </Button>
+        </>
+      )
+    } else {
+      return (
+        <>
+          <Button
+            variant='info'
+            onClick={() => navigate(`${ENDPOINT.detalle}/${card.id}`)}
+          >
+            Ver Detalle
+          </Button>
+          <Button variant='secondary' onClick={() => addProduct(card)}>
+            Agregar
+          </Button>
           <Button>editar</Button>
-          <Button variant='danger' onClick={() => borrarProduct(card)}>borrar</Button>
+          <Button variant='danger' onClick={() => borrarProduct(card)}>
+            borrar
+          </Button>
         </>
       )
     }
@@ -52,20 +79,19 @@ const Productos = () => {
       </Row>
       <ProductoFiltro onFiltroChange={handleFiltroChange} />
       <Row>
-        {productosFiltrados.map(card => (
+        {productosFiltrados.map((card) => (
           <Container className='col-md-3 p-3' key={card.id}>
             <Card>
-              <Card.Img variant='top' className='img-fluid' src={card.img} />
+              {console.log('Image path:', card.img)} {/* Verifica la ruta aquí */}
+              <Card.Img variant='top' className='img-fluid' src={`http://localhost:3000${card.img}`} alt={card.nombre} />
+
               <Card.Body>
                 <Card.Title>{card.nombre}</Card.Title>
                 <hr />
                 <Card.Text>{card.descripcion}</Card.Text>
                 <Card.Text>Precio: {card.precio}</Card.Text>
-                <Button variant='info' onClick={() => navigate(`${ENDPOINT.detalle}/${card.id}`)}>Ver Detalle</Button>
-                <Button variant='secondary' onClick={() => addProduct(card)}>Agregar</Button>
 
-                <div>{edit()}</div>
-
+                <div>{botones()}</div>
               </Card.Body>
             </Card>
           </Container>

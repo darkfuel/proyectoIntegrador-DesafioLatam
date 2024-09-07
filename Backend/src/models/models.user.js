@@ -36,6 +36,16 @@ export const validarUsuario = async (email, password) => {
     const newError = { code: 401, message: 'Email o clave incorrecta' }
     throw newError
   }
+
+  console.log(usuario.id, 'id de usuario desde models')
+
+  const dataUser = {
+    idUser: usuario.id,
+    isAdmin: usuario.is_admin,
+    email: usuario.email
+  }
+
+  return dataUser
 }
 
 export const getUsuario = async (email) => {

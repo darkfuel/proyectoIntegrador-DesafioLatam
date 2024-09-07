@@ -1,5 +1,5 @@
 // export const URLBASE = 'http://localhost:3000'
-export const URLBASE = 'http://localhost:3001'
+export const URLBASE = 'http://localhost:3000'
 
 export const ENDPOINT = {
   detalle: '/productos',
