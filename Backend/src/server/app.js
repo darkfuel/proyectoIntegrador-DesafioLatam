@@ -57,4 +57,6 @@ app.get('/users', authToken, async (req, res) => {
   }
 })
 
+app.post('/')
+
 app.listen(PORT, () => console.log('SERVER UP!'))
