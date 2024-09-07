@@ -1,26 +1,37 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import Context from '../context/UserContext.jsx'
-import { Container, Row, Card, Button } from 'react-bootstrap/'
+import { Container, Row, Card, Button } from 'react-bootstrap'
 import { ENDPOINT } from '../config/constantes.jsx'
-import cardData from '../../public/product.json'
 import ProductoFiltro from '../components/ProductoFiltro.jsx'
 import { ProductContext } from '../context/ProductContext.jsx'
 import UserContext from '../context/UserContext.jsx'
 
 const Productos = () => {
-  const { addProduct } = useContext(ProductContext)
+  const { addProduct, borrarProduct } = useContext(ProductContext)
   const navigate = useNavigate()
   const [filtro, setFiltro] = useState('')
+
+  const [productos, setProductos] = useState([])
+
+  useEffect(() => {
+    fetch('http://localhost:3001/productos')
+      .then(response => response.json())
+      .then(data => {
+        setProductos(data.rows || [])
+      })
+      .catch(error => console.error('Error fetching data:', error))
+  }, [])
+
   const { getNuevoUsuario } = useContext(UserContext)
+
 
   const handleFiltroChange = (texto) => {
     setFiltro(texto)
   }
 
-  const productosFiltrados = cardData.filter(card =>
-    card.title.toLowerCase().includes(filtro.toLowerCase()) ||
-    card.descripción.toLowerCase().includes(filtro.toLowerCase())
+  const productosFiltrados = productos.filter(card =>
+    card.nombre.toLowerCase().includes(filtro.toLowerCase()) ||
+    card.descripcion.toLowerCase().includes(filtro.toLowerCase())
   )
 
   const edit = (id) => {
@@ -28,7 +39,7 @@ const Productos = () => {
       return (
         <>
           <Button>editar</Button>
-          <Button>eliminar</Button>
+          <Button variant='danger' onClick={() => borrarProduct(card)}>borrar</Button>
         </>
       )
     }
@@ -46,13 +57,15 @@ const Productos = () => {
             <Card>
               <Card.Img variant='top' className='img-fluid' src={card.img} />
               <Card.Body>
-                <Card.Title>{card.title}</Card.Title>
+                <Card.Title>{card.nombre}</Card.Title>
                 <hr />
-                <Card.Text>{card.descripción}</Card.Text>
-                <Card.Text>Precio: {card.price}</Card.Text>
+                <Card.Text>{card.descripcion}</Card.Text>
+                <Card.Text>Precio: {card.precio}</Card.Text>
                 <Button variant='info' onClick={() => navigate(`${ENDPOINT.detalle}/${card.id}`)}>Ver Detalle</Button>
                 <Button variant='secondary' onClick={() => addProduct(card)}>Agregar</Button>
+
                 <div>{edit()}</div>
+
               </Card.Body>
             </Card>
           </Container>
