@@ -22,7 +22,7 @@ CREATE TABLE productos (
     stock INT NOT NULL,
     descripcion TEXT,
     img VARCHAR(1000) NOT NULL,
-    favorite BOOLEAN NOT NULL DEFAULT false,
+    favoritos BOOLEAN default false,
     creado_por INT NOT NULL REFERENCES usuarios(id),
     fecha_creacion timestamp with time zone default now()
     );
@@ -33,4 +33,4 @@ CREATE TABLE compras(
     id_producto INT NOT NULL REFERENCES productos(id),
     cantidad INT NOT NULL,
     fecha_de_compra timestamp with time zone default now()
-)
+);

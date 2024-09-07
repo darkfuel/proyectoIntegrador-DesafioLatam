@@ -1,36 +1,58 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Container, Row, Card, Button } from 'react-bootstrap/'
-import { ENDPOINT } from '../config/constantes.jsx'
-import cardData from '../../public/product.json'
+import { Container, Row, Card, Button } from 'react-bootstrap'
+import { Star, StarFill } from 'react-bootstrap-icons'
+// import { ENDPOINT } from '../config/constantes.jsx'
 import ProductoFiltro from '../components/ProductoFiltro.jsx'
 import { ProductContext } from '../context/ProductContext.jsx'
 import UserContext from '../context/UserContext.jsx'
+// import { registrarUsuario } from '../../../Backend/src/models/models.user.js'
 
 const Productos = () => {
-  const { getNuevoUsuario } = useContext(UserContext)
-  const { addProduct } = useContext(ProductContext)
+  const { addProduct, addFavorite, borrarProduct, productos, getData, filtro, setFiltro } = useContext(ProductContext)
   const navigate = useNavigate()
-  const [filtro, setFiltro] = useState('')
+  // const [filtro, setFiltro] = useState('')
+
+  useEffect(() => {
+    getData()
+    // fetch('http://localhost:3000/productos')
+    //   .then(response => response.json())
+    //   .then(data => {
+    //     console.log(data)
+    //     setProductos(data.rows || [])
+    //   })
+    //   .catch(error => console.error('Error fetching data:', error))
+  }, [])
+
+  const { getNuevoUsuario } = useContext(UserContext)
 
   const handleFiltroChange = (texto) => {
     setFiltro(texto)
   }
-
-  const productosFiltrados = cardData.filter(card =>
-    card.title.toLowerCase().includes(filtro.toLowerCase()) ||
-    card.descripción.toLowerCase().includes(filtro.toLowerCase())
+  const productosFiltrados = productos.filter(card =>
+    card.nombre.toLowerCase().includes(filtro.toLowerCase()) ||
+    card.descripcion.toLowerCase().includes(filtro.toLowerCase())
   )
-  const editar = () => {
-    if (getNuevoUsuario.is_admin) {
+
+  const edit = (card) => {
+    if (getNuevoUsuario === null || !getNuevoUsuario.is_admin) {
       return (
         <>
+          <Button variant='info' onClick={() => navigate(`/productos/${card.id}`)}>Ver Detalle</Button>
+          <Button variant='secondary' onClick={() => addProduct(card)}>Agregar</Button>
+        </>
+      )
+    } else {
+      return (
+        <>
+          <Button variant='info' onClick={() => navigate(`/productos/${card.id}`)}>Ver Detalle</Button>
           <Button>editar</Button>
-          <Button>eliminar</Button>
+          <Button variant='danger' onClick={() => borrarProduct(card.id)}>borrar</Button>
         </>
       )
     }
   }
+
   return (
     <Container fluid className='mb-5'>
       <Row className='fluid text-center mt-2 mb-2 justify-content-center'>
@@ -41,15 +63,14 @@ const Productos = () => {
         {productosFiltrados.map(card => (
           <Container className='col-md-3 p-3' key={card.id}>
             <Card>
+              {!card.favorite ? <Star color='gray' size={30} onClick={() => addFavorite(card.id)} /> : <StarFill color='gray' size={30} onClick={() => addFavorite(card.id)} />}
               <Card.Img variant='top' className='img-fluid' src={card.img} />
               <Card.Body>
-                <Card.Title>{card.title}</Card.Title>
+                <Card.Title>{card.nombre}</Card.Title>
                 <hr />
-                <Card.Text>{card.descripción}</Card.Text>
-                <Card.Text>Precio: {card.price}</Card.Text>
-                <Button variant='info' onClick={() => navigate(`${ENDPOINT.detalle}/${card.id}`)}>Ver Detalle</Button>
-                <Button variant='secondary' onClick={() => addProduct(card)}>Agregar</Button>
-                {editar()}
+                <Card.Text>{card.descripcion}</Card.Text>
+                <Card.Text>Precio: {card.precio}</Card.Text>
+                <div>{edit(card)}</div>
               </Card.Body>
             </Card>
           </Container>

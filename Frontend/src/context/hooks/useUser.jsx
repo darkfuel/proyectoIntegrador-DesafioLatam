@@ -8,7 +8,7 @@ const useUser = () => {
   return {
     getNuevoUsuario:
       user,
-      setNuevoUsuario
+    setNuevoUsuario
   }
 }
 

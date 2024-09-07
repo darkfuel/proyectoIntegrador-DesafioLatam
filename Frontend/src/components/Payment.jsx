@@ -1,11 +1,11 @@
 import { useContext, useState } from 'react'
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
-import Context from '../context/UserContext.jsx'
+import { ProductContext } from '../context/ProductContext'
 
 const Payment = ({ eraseCart }) => {
   const [show, setShow] = useState(false)
-  const { total } = useContext(Context)
+  const { total } = useContext(ProductContext)
 
   const handleClose = () => {
     setShow(false)

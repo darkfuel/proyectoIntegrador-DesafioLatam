@@ -5,6 +5,8 @@ import { registrarUsuario, validarUsuario, getUsuario } from '../models/models.u
 import { jwtSign, jwtDecode } from '../utils/jwt/jwt.js'
 import { authToken } from '../middlewares/authToken.js'
 
+import { AllProducts, findById, deleteById, updateFavorite } from '../models/models.products.js' // updateFavorite
+
 const app = express()
 const PORT = process.env.PORT ?? 3000
 
@@ -57,4 +59,46 @@ app.get('/users', authToken, async (req, res) => {
   }
 })
 
+app.get('/productos', async (req, res) => {
+  try {
+    const result = await AllProducts(req.query)
+    res.status(200).json(result)
+  } catch (error) {
+    console.error('Error al ejecutar la consulta:', error.message)
+    res.status(500).json({ status: false, message: 'Internal Server Error' })
+  }
+})
+
+app.get('/productos/:id', async (req, res) => {
+  try {
+    const result = await findById(req.params.id)
+    res.status(200).json({ status: true, message: result })
+  } catch (error) {
+    console.error('Error al ejecutar la consulta:', error.message)
+    res.status(500).json({ status: false, message: 'Internal Server Error: (id)' })
+  }
+})
+
+app.put('/productos/:id', async (req, res) => {
+  try {
+    const result = await updateFavorite(req.params.id)
+    res.status(200).json({ status: true, message: result })
+  } catch (error) {
+    console.error('Error al actualizar', error)
+    res.status(500).json({ status: false, message: 'Internal Server Error: (id)' })
+  }
+})
+
+app.delete('/productos/:id', async (req, res) => {
+  try {
+    const result = await deleteById(req.params.id)
+    res.status(200).json({ status: true, message: result })
+  } catch (error) {
+    console.error('Error al ejecutar la consulta:', error.message)
+    res.status(500).json({ status: false, message: 'Internal Server Error: (id)' })
+  }
+})
+
 app.listen(PORT, () => console.log('SERVER UP!'))
+
+export default app

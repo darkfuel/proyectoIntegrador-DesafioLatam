@@ -1,5 +1,7 @@
-import { createContext, useEffect, useState } from "react"
-
+import axios from 'axios'
+import { createContext, useEffect, useState } from 'react'
+import { ENDPOINT } from '../config/constantes.jsx'
+// import { updateFavorite } from '../../../Backend/src/models/models.products.js'
 export const ProductContext = createContext()
 
 const ProductProvider = ({ children }) => {
@@ -7,26 +9,49 @@ const ProductProvider = ({ children }) => {
   const [productos, setProductos] = useState([])
   const [productDetails, setProductDetails] = useState({})
   const [cart, setCart] = useState([])
+  const [filtro, setFiltro] = useState('')
 
   const getData = async () => {
-    const res = await fetch('/product.json')
-    const product = await res.json()
-    setProductos(product)
+    const res = await fetch(`${ENDPOINT.productos}`)
+    const { rows } = await res.json()
+    setProductos(rows)
   }
 
   useEffect(() => {
     getData()
   }, [])
 
-  const addProduct = ({ id, price, title, img, descripción }) => {
+  const addProduct = ({ id, precio, nombre, img, descripcion }) => {
     const productAdded = cart.find((product) => product.id === id)
-    const newAdded = { id, price, title, img, descripción, count: 1 }
+    const newAdded = { id, precio, nombre, img, descripcion, count: 1 }
     if (productAdded !== undefined) {
       cart[cart.findIndex((product) => product.id === newAdded.id)].count++
       setCart([...cart])
     } else {
       setCart([...cart, newAdded])
     }
+  }
+
+  const addFavorite = (id) => {
+    axios.put(`${ENDPOINT.productos}/${id}`)
+      .then(({ data }) => {
+        console.log('producto actualizado', data)
+        getData()
+      })
+      .catch(({ response: { data } }) => {
+        console.error(data)
+      })
+  }
+
+  const borrarProduct = (id) => {
+    axios.delete(`${ENDPOINT.productos}/${id}`)
+      .then(({ data }) => {
+        console.log('producto eliminado', data)
+        getData()
+      })
+      .catch(({ response: { data } }) => {
+        console.error(data)
+      })
   }
 
   const upCount = (index) => {
@@ -53,12 +78,17 @@ const ProductProvider = ({ children }) => {
     productos,
     productDetails,
     cart,
-    setProductDetails,
+    filtro,
     setTotal,
+    setProductDetails,
+    setFiltro,
     addProduct,
+    addFavorite,
     upCount,
     donwCount,
-    eraseCart
+    eraseCart,
+    borrarProduct,
+    getData
   }
 
   return (
@@ -68,4 +98,4 @@ const ProductProvider = ({ children }) => {
   )
 }
 
-export default ProductProvider;
+export default ProductProvider
