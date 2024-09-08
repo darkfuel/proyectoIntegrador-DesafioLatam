@@ -44,12 +44,8 @@ const Login = ({ setBasicActive }) => {
       return window.alert('Por favor ingresa un email válido')
     }
 
-    console.log(user.email)
-    console.log(user.password)
-
     axios.post(ENDPOINT.login, user)
       .then(({ data }) => {
-        console.log('data desde el login', data)
         window.sessionStorage.setItem('token', data.token)
         Swal.fire({
           title: 'Genial!',

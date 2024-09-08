@@ -12,6 +12,7 @@ const ProductProvider = ({ children }) => {
   const [filtro, setFiltro] = useState('')
 
   const getData = async () => {
+
     const res = await fetch(`${ENDPOINT.productos}`)
     const { rows } = await res.json()
     setProductos(rows)

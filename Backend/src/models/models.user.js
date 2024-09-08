@@ -36,6 +36,16 @@ export const validarUsuario = async (email, password) => {
     const newError = { code: 401, message: 'Email o clave incorrecta' }
     throw newError
   }
+
+  console.log(usuario.id, 'id de usuario desde models')
+
+  const dataUser = {
+    idUser: usuario.id,
+    isAdmin: usuario.is_admin,
+    email: usuario.email
+  }
+
+  return dataUser
 }
 
 export const getUsuario = async (email) => {
@@ -49,4 +59,12 @@ export const getUsuario = async (email) => {
     const newError = { code: 500, message: error }
     throw newError
   }
+}
+
+export const editarUsuario = async ({ nombre, apellido, telefono, email, direccion }) => {
+  console.log(nombre, apellido, telefono, email, direccion)
+  const query = 'UPDATE usuarios SET nombre = $1, apellido = $2, telefono = $3, email = $4, direccion = $5 WHERE id = 2;'
+  const values = [nombre, apellido, telefono, email, direccion]
+  const { rows } = await db(query, values)
+  return rows
 }
