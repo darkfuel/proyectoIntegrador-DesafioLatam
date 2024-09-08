@@ -8,9 +8,10 @@ import Compressor from 'compressorjs'
 
 const NuevoProducto = () => {
   const token = window.sessionStorage.getItem('token')
+
   console.log('token desde nuevo producto:', token)
 
-  const defaultFile = "/img/imgNuevoProducto.png"
+  const defaultFile = '/img/imgNuevoProducto.png'
   const [imgSrc, setImgSrc] = useState(defaultFile)
   const fileInputRef = useRef(null)
   const [producto, setProducto] = useState({
@@ -22,10 +23,10 @@ const NuevoProducto = () => {
   const [file, setFile] = useState(null); // Para manejar el archivo
 
   const handleProduct = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setProducto((prevProducto) => ({
       ...prevProducto,
-      [name]: value,
+      [name]: value
     }))
   }
 
@@ -39,7 +40,7 @@ const NuevoProducto = () => {
       };
       reader.readAsDataURL(selectedFile);
     }
-  };
+  }
 
 
   const handleForm = (e) => {
@@ -52,7 +53,7 @@ const NuevoProducto = () => {
       !producto?.stock?.trim() ||
       !producto?.descripcion?.trim()
     ) {
-      return Swal.fire("Todos lo campos son obligatorios")
+      return Swal.fire('Todos lo campos son obligatorios')
     }
 
     if (
@@ -60,11 +61,12 @@ const NuevoProducto = () => {
       !validadorNum.test(producto.stock)
     ) {
       return Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Precio y stock deben ser números",
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Precio y stock deben ser números'
       })
     }
+    
     const formData = new FormData();
     formData.append('nombre', producto.nombre);
     formData.append('precio', producto.precio);
@@ -78,104 +80,106 @@ const NuevoProducto = () => {
       .post(ENDPOINT.nuevoProducto, formData,{ headers: { Authorization: `Bearer ${token}` } })
       .then(() => {
         Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Producto creado con éxito",
+          position: 'top-end',
+          icon: 'success',
+          title: 'Producto creado con éxito',
           showConfirmButton: false,
-          timer: 1500,
-        });
+          timer: 1500
+        })
       })
       .catch(({ response: { data } }) => {
-        console.error(data);
+        console.error(data)
         Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: `${data.message}`,
+          icon: 'error',
+          title: 'Oops...',
+          text: `${data.message}`
         })
       })
 
-    setProducto({nombre: "",
-      precio: "",
-      stock: "",
-      descripcion: ""}),
+    setProducto({
+      nombre: '',
+      precio: '',
+      stock: '',
+      descripcion: ''
+    }),
     setImgSrc(defaultFile)
-  };
+  }
 
   return (
     <>
-      <h2 className="tituloNuevoProducto">Agrega un nuevo producto:</h2>
-      <form className="formNuevoProducto" onSubmit={handleForm}>
-        <div className="producto d-flex flex-column">
+      <h2 className='tituloNuevoProducto'>Agrega un nuevo producto:</h2>
+      <form className='formNuevoProducto' onSubmit={handleForm}>
+        <div className='producto d-flex flex-column'>
           <img
-            id="imgNuevoProducto"
-            className="imgNuevoProducto"
+            id='imgNuevoProducto'
+            className='imgNuevoProducto'
             src={imgSrc}
-            alt="agregar nuevo producto"
+            alt='agregar nuevo producto'
           />
           <input
-            type="file"
-            name="nuevoProducto"
-            id="cargarNuevoProducto"
-            accept="image/*"
+            type='file'
+            name='nuevoProducto'
+            id='cargarNuevoProducto'
+            accept='image/*'
             ref={fileInputRef}
             onChange={handleFileChange}
           />
 
-          <label htmlFor="cargarNuevoProducto" className="btn btn-primary">
+          <label htmlFor='cargarNuevoProducto' className='btn btn-primary'>
             Agregar imagen
           </label>
         </div>
 
-        <div className="detalleProducto">
+        <div className='detalleProducto'>
           <MDBInput
-            type="text"
-            id="NombreProducto"
-            name="nombre"
-            wrapperClass="mb-4"
-            label="Nombre del producto"
+            type='text'
+            id='NombreProducto'
+            name='nombre'
+            wrapperClass='mb-4'
+            label='Nombre del producto'
             value={producto.nombre}
             onChange={handleProduct}
           />
-          <div className="d-flex gap-3">
+          <div className='d-flex gap-3'>
             <MDBInput
-              type="number"
-              id="precioProducto"
-              name="precio"
-              wrapperClass="mb-4"
-              label="Precio"
+              type='number'
+              id='precioProducto'
+              name='precio'
+              wrapperClass='mb-4'
+              label='Precio'
               value={producto.precio}
               onChange={handleProduct}
             />
             <MDBInput
-              type="number"
-              id="stock"
-              name="stock"
-              wrapperClass="mb-4"
-              label="Stock"
+              type='number'
+              id='stock'
+              name='stock'
+              wrapperClass='mb-4'
+              label='Stock'
               value={producto.stock}
               onChange={handleProduct}
             />
           </div>
 
           <MDBInput
-            wrapperClass="mb-4"
-            type="text"
-            className="descripcionProducto"
-            id="descripcionProducto"
-            name="descripcion"
+            wrapperClass='mb-4'
+            type='text'
+            className='descripcionProducto'
+            id='descripcionProducto'
+            name='descripcion'
             rows={4}
-            label="Descripción"
+            label='Descripción'
             value={producto.descripcion}
             onChange={handleProduct}
           />
 
-          <MDBBtn type="submit" className="mb-4" block>
+          <MDBBtn type='submit' className='mb-4' block>
             Agregar Producto
           </MDBBtn>
         </div>
       </form>
     </>
-  );
-};
+  )
+}
 
-export default NuevoProducto;
+export default NuevoProducto

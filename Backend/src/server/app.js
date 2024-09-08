@@ -4,17 +4,17 @@ import morgan from 'morgan'
 import { registrarUsuario, validarUsuario, getUsuario, editarUsuario } from '../models/models.user.js'
 import { jwtSign, jwtDecode } from '../utils/jwt/jwt.js'
 import { authToken } from '../middlewares/authToken.js'
-// import bodyParser from 'body-parser'
 import multer from 'multer'
 import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { multerMidleware } from '../middlewares/multer.js'
 
-import { AllProducts, findById, deleteById, registrarProducto } from '../models/models.products.js'
+import { AllProducts, findById, deleteById, registrarProducto, updateFavorite } from '../models/models.products.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
+
 
 const app = express()
 const PORT = process.env.PORT ?? 3000
@@ -143,6 +143,16 @@ app.get('/productos/:id', async (req, res) => {
   }
 })
 
+app.put('/productos/:id', async (req, res) => {
+  try {
+    const result = await updateFavorite(req.params.id)
+    res.status(200).json({ status: true, message: result })
+  } catch (error) {
+    console.error('Error al actualizar', error)
+    res.status(500).json({ status: false, message: 'Internal Server Error: (id)' })
+  }
+})
+
 app.delete('/productos/:id', async (req, res) => {
   try {
     const result = await deleteById(req.params.id)
@@ -154,3 +164,5 @@ app.delete('/productos/:id', async (req, res) => {
 })
 
 app.listen(PORT, () => console.log('SERVER UP!'))
+
+export default app

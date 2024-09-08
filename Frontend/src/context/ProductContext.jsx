@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { createContext, useEffect, useState } from 'react'
 import { ENDPOINT } from '../config/constantes.jsx'
+// import { updateFavorite } from '../../../Backend/src/models/models.products.js'
 export const ProductContext = createContext()
 
 const ProductProvider = ({ children }) => {
@@ -8,11 +9,13 @@ const ProductProvider = ({ children }) => {
   const [productos, setProductos] = useState([])
   const [productDetails, setProductDetails] = useState({})
   const [cart, setCart] = useState([])
+  const [filtro, setFiltro] = useState('')
 
   const getData = async () => {
-    const res = await fetch('http://localhost:3000/productos')
-    const product = await res.json()
-    setProductos(product)
+
+    const res = await fetch(`${ENDPOINT.productos}`)
+    const { rows } = await res.json()
+    setProductos(rows)
   }
 
   useEffect(() => {
@@ -30,17 +33,27 @@ const ProductProvider = ({ children }) => {
     }
   }
 
-  const borrarProduct = ({ id }) => {
-    axios.delete(`${ENDPOINT.borrar}/${id}`)
+  const addFavorite = (id) => {
+    axios.put(`${ENDPOINT.productos}/${id}`)
       .then(({ data }) => {
-        console.log('producto eliminado', data);
+        console.log('producto actualizado', data)
         getData()
       })
       .catch(({ response: { data } }) => {
-        console.error(data);
-      });
-  };
-  
+        console.error(data)
+      })
+  }
+
+  const borrarProduct = (id) => {
+    axios.delete(`${ENDPOINT.productos}/${id}`)
+      .then(({ data }) => {
+        console.log('producto eliminado', data)
+        getData()
+      })
+      .catch(({ response: { data } }) => {
+        console.error(data)
+      })
+  }
 
   const upCount = (index) => {
     cart[index].count++
@@ -66,13 +79,17 @@ const ProductProvider = ({ children }) => {
     productos,
     productDetails,
     cart,
-    setProductDetails,
+    filtro,
     setTotal,
+    setProductDetails,
+    setFiltro,
     addProduct,
+    addFavorite,
     upCount,
     donwCount,
     eraseCart,
-    borrarProduct
+    borrarProduct,
+    getData
   }
 
   return (
