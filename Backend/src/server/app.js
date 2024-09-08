@@ -1,7 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import morgan from 'morgan'
-import { registrarUsuario, validarUsuario, getUsuario } from '../models/models.user.js'
+import { registrarUsuario, validarUsuario, getUsuario, editarUsuario } from '../models/models.user.js'
 import { jwtSign, jwtDecode } from '../utils/jwt/jwt.js'
 import { authToken } from '../middlewares/authToken.js'
 // import bodyParser from 'body-parser'
@@ -24,8 +24,6 @@ app.use(express.json())
 app.use(morgan('dev'))
 // Sirve archivos estáticos desde la carpeta "uploads"
 app.use('/uploads', express.static(path.resolve(__dirname, '..', 'uploads')))
-// app.use(bodyParser.json({ limit: '50mb' }))
-// app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }))
 
 app.post('/users', async (req, res) => {
   try {
@@ -72,8 +70,19 @@ app.get('/users', authToken, async (req, res) => {
   }
 })
 
-// ------------------------------------------------------------
-// Crea la carpeta "uploads" si no existe
+app.put('/nuevo-producto', async (req, res) => {
+  try {
+    const { nombre, apellido, telefono, email, direccion } = req.body
+    console.log(nombre, apellido, telefono, email, direccion)
+
+    await editarUsuario({ nombre, apellido, telefono, email, direccion })
+    res.status(200).json({ message: 'Tus datos han sido actualizados con éxito!' })
+  } catch (error) {
+    res.status(error.code || 500).json({ message: 'No se puede actualizar tu usuario, por favor intenta más tarde', error })
+  }
+})
+
+// Crea la carpeta "uploads" si no existe para guardar las imagenes
 const uploadsDir = path.resolve(__dirname, '..', 'uploads')
 if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true })
@@ -97,25 +106,16 @@ const upload = multer({ storage })
 
 app.post('/nuevo-producto', authToken, multerMidleware, upload.single('img'), async (req, res) => {
   try {
-    console.log('Archivo subido:', req.file)
-    console.log('Datos del cuerpo:', req.body)
+    const { nombre, precio, stock, descripcion } = req.body
+    const imgPath = req.file ? `/uploads/${req.file.filename}` : null
     const authorization = req.header('Authorization')
-    console.log('authorization GET/users:', authorization)
-
     const [, token] = authorization.split(' ')
-    console.log(token)
-
     const { idUser, isAdmin } = jwtDecode(token)
-    console.log(isAdmin)
-    console.log(idUser)
 
     if (!isAdmin) {
       return res.status(401).json({ message: 'Usuario no autorizado para agregar productos' })
     }
 
-    const { nombre, precio, stock, descripcion } = req.body
-    console.log(nombre, precio, stock, descripcion)
-    const imgPath = req.file ? `/uploads/${req.file.filename}` : null
     await registrarProducto({ nombre, precio, stock, descripcion, imgPath, idUser })
     res.status(200).json({ status: true, message: 'Producto agregado con éxito' })
   } catch (error) {

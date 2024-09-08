@@ -60,3 +60,11 @@ export const getUsuario = async (email) => {
     throw newError
   }
 }
+
+export const editarUsuario = async ({ nombre, apellido, telefono, email, direccion }) => {
+  console.log(nombre, apellido, telefono, email, direccion)
+  const query = 'UPDATE usuarios SET nombre = $1, apellido = $2, telefono = $3, email = $4, direccion = $5 WHERE id = 2;'
+  const values = [nombre, apellido, telefono, email, direccion]
+  const { rows } = await db(query, values)
+  return rows
+}

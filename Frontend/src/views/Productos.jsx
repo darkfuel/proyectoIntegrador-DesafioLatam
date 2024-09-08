@@ -36,7 +36,7 @@ const Productos = () => {
       card.descripcion.toLowerCase().includes(filtro.toLowerCase())
   )
 
-  const botones = (id) => {
+  const botones = (card) => {
     if (!getNuevoUsuario || !getNuevoUsuario.is_admin) {
       return (
         <>
@@ -91,7 +91,7 @@ const Productos = () => {
                 <Card.Text>{card.descripcion}</Card.Text>
                 <Card.Text>Precio: {card.precio}</Card.Text>
 
-                <div>{botones()}</div>
+                <div>{botones(card)}</div>
               </Card.Body>
             </Card>
           </Container>
