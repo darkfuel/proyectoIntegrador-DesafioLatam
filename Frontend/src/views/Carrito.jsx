@@ -1,6 +1,5 @@
 import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-// import Context from '../context/UserContext.jsx'
 import { Container } from 'react-bootstrap'
 import Payment from '../components/Payment.jsx'
 import { ProductContext } from '../context/ProductContext.jsx'
@@ -23,7 +22,7 @@ const Carrito = () => {
           {cart.map((producto, index) => (
             <div key={producto.id} className='d-flex justify-content-around'>
               <div className='d-flex'>
-                <img src={producto.img} alt='' width={300} className='p-3' />
+                <img src={`http://localhost:3000${producto.img}`} alt={producto.nombre} width={300} className='p-3' />
                 <p className='mt-3 text-capitalize'>
                   <strong>{producto.nombre}</strong>
                 </p>

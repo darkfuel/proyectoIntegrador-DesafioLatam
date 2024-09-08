@@ -1,6 +1,7 @@
 .miPerfil{
   background-color: 1, 63, 86;
 }
+
 .cardMiPerfil{
   background-color: antiquewhite;
 }
@@ -14,12 +15,6 @@
 .subtituloPerfil{
   width: 250px;
   height: 18px;
-}
-
-@media (min-width: 1024px) {
-  .container {
-    flex-wrap: nowrap; /* Mantiene los elementos en una sola línea */
-  }
 }
 
 .contenidoMiPerfil{
