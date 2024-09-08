@@ -1,10 +1,9 @@
-import { useEffect, useRef, useState } from "react";
-import "./nuevoProducto.css";
-import { MDBInput, MDBBtn } from "mdb-react-ui-kit";
-import Swal from "sweetalert2";
-import { ENDPOINT } from "../../config/constantes";
-import axios from "axios";
-import Compressor from 'compressorjs'
+import { useRef, useState } from 'react'
+import './nuevoProducto.css'
+import { MDBInput, MDBBtn } from 'mdb-react-ui-kit'
+import Swal from 'sweetalert2'
+import { ENDPOINT } from '../../config/constantes'
+import axios from 'axios'
 
 const NuevoProducto = () => {
   const token = window.sessionStorage.getItem('token')
@@ -15,12 +14,12 @@ const NuevoProducto = () => {
   const [imgSrc, setImgSrc] = useState(defaultFile)
   const fileInputRef = useRef(null)
   const [producto, setProducto] = useState({
-    nombre: "",
-    precio: "",
-    stock: "",
-    descripcion: ""
+    nombre: '',
+    precio: '',
+    stock: '',
+    descripcion: ''
   })
-  const [file, setFile] = useState(null); // Para manejar el archivo
+  const [file, setFile] = useState(null) // Para manejar el archivo
 
   const handleProduct = (e) => {
     const { name, value } = e.target
@@ -31,17 +30,16 @@ const NuevoProducto = () => {
   }
 
   const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
+    const selectedFile = e.target.files[0]
     if (selectedFile) {
-      setFile(selectedFile); // Guarda el archivo seleccionado
-      const reader = new FileReader();
+      setFile(selectedFile) // Guarda el archivo seleccionado
+      const reader = new FileReader()
       reader.onload = function (e) {
-        setImgSrc(e.target.result);
-      };
-      reader.readAsDataURL(selectedFile);
+        setImgSrc(e.target.result)
+      }
+      reader.readAsDataURL(selectedFile)
     }
   }
-
 
   const handleForm = (e) => {
     e.preventDefault()
@@ -66,18 +64,18 @@ const NuevoProducto = () => {
         text: 'Precio y stock deben ser números'
       })
     }
-    
-    const formData = new FormData();
-    formData.append('nombre', producto.nombre);
-    formData.append('precio', producto.precio);
-    formData.append('stock', producto.stock);
-    formData.append('descripcion', producto.descripcion);
-    formData.append('img', file); // Añade el archivo al formulario
+
+    const formData = new FormData()
+    formData.append('nombre', producto.nombre)
+    formData.append('precio', producto.precio)
+    formData.append('stock', producto.stock)
+    formData.append('descripcion', producto.descripcion)
+    formData.append('img', file) // Añade el archivo al formulario
     console.log(file)
     console.log(formData)
 
     axios
-      .post(ENDPOINT.nuevoProducto, formData,{ headers: { Authorization: `Bearer ${token}` } })
+      .post(ENDPOINT.nuevoProducto, formData, { headers: { Authorization: `Bearer ${token}` } })
       .then(() => {
         Swal.fire({
           position: 'top-end',
@@ -101,7 +99,7 @@ const NuevoProducto = () => {
       precio: '',
       stock: '',
       descripcion: ''
-    }),
+    })
     setImgSrc(defaultFile)
   }
 

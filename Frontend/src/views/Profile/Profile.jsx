@@ -63,7 +63,7 @@ const Profile = () => {
               <MDBCardText>{getNuevoUsuario?.direccion}</MDBCardText>
             </div>
           </MDBCardBody>
-          <MDBCardFooter className='text-muted'> <ModalEditUser /> </MDBCardFooter>
+          <MDBCardFooter className='text-muted'> <ModalEditUser getNuevoUsuarioData={getNuevoUsuarioData} /> </MDBCardFooter>
         </MDBCard>
 
         <img

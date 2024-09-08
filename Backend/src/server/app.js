@@ -10,11 +10,10 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import { multerMidleware } from '../middlewares/multer.js'
 
-import { AllProducts, findById, deleteById, registrarProducto, updateFavorite } from '../models/models.products.js'
+import { AllProducts, findById, deleteById, registrarProducto, updateFavorite, editarProducto } from '../models/models.products.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
-
 
 const app = express()
 const PORT = process.env.PORT ?? 3000
@@ -70,12 +69,16 @@ app.get('/users', authToken, async (req, res) => {
   }
 })
 
-app.put('/nuevo-producto', async (req, res) => {
+app.put('/editarUsuario', authToken, async (req, res) => {
   try {
     const { nombre, apellido, telefono, email, direccion } = req.body
     console.log(nombre, apellido, telefono, email, direccion)
+    const authorization = req.header('Authorization')
+    const [, token] = authorization.split(' ')
+    const { idUser } = jwtDecode(token)
+    console.log(idUser)
 
-    await editarUsuario({ nombre, apellido, telefono, email, direccion })
+    await editarUsuario({ nombre, apellido, telefono, email, direccion, idUser })
     res.status(200).json({ message: 'Tus datos han sido actualizados con éxito!' })
   } catch (error) {
     res.status(error.code || 500).json({ message: 'No se puede actualizar tu usuario, por favor intenta más tarde', error })
@@ -150,6 +153,22 @@ app.put('/productos/:id', async (req, res) => {
   } catch (error) {
     console.error('Error al actualizar', error)
     res.status(500).json({ status: false, message: 'Internal Server Error: (id)' })
+  }
+})
+
+app.put('/productosEdit', authToken, async (req, res) => {
+  try {
+    const { id, nombre, precio, stock, descripcion } = req.body
+    console.log(id, nombre, precio, stock, descripcion)
+    const authorization = req.header('Authorization')
+    const [, token] = authorization.split(' ')
+    const { idUser } = jwtDecode(token)
+    console.log(idUser)
+
+    await editarProducto({ id, nombre, precio, stock, descripcion, idUser })
+    res.status(200).json({ message: 'El producto ha sido actualizado con éxito!' })
+  } catch (error) {
+    res.status(error.code || 500).json({ message: 'No se puede actualizar el producto, por favor intenta más tarde', error })
   }
 })
 
