@@ -42,7 +42,28 @@ export default function ModalEditProduct ({ id }) {
 
   const editProduct = (e) => {
     e.preventDefault()
-    console.log('Datos a enviar:', productoEdit)
+
+    const validadorNum = /^\d*$/
+
+    if (
+      !productoEdit?.nombre?.trim() ||
+      !productoEdit?.precio?.trim() ||
+      !productoEdit?.stock?.trim() ||
+      !productoEdit?.descripcion?.trim()
+    ) {
+      return Swal.fire('Todos lo campos son obligatorios')
+    }
+
+    if (
+      !validadorNum.test(productoEdit.precio) ||
+      !validadorNum.test(productoEdit.stock)
+    ) {
+      return Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Precio y stock deben ser números'
+      })
+    }
 
     if (!id) {
       console.error('ID no encontrado') // Agregar una verificación de id
@@ -52,8 +73,8 @@ export default function ModalEditProduct ({ id }) {
     axios.put(ENDPOINT.productosEdit, productoEdit, { headers: { Authorization: `Bearer ${token}` } })
       .then(() => {
         Swal.fire({
-          title: 'Good job!',
-          text: 'Usuario editado con éxito!',
+          title: 'Buen trabajo!',
+          text: 'Producto editado con éxito!',
           icon: 'success'
         })
 
@@ -145,16 +166,15 @@ export default function ModalEditProduct ({ id }) {
                     onChange={handleProduct}
                   />
 
-                  <MDBBtn type='submit'>Editar Usuario</MDBBtn>
+                  <MDBBtn type='submit'>Editar producto</MDBBtn>
                 </form>
               </div>
 
             </MDBModalBody>
             <MDBModalFooter>
               <MDBBtn color='secondary' onClick={toggleOpen}>
-                Close
+                Cerrar
               </MDBBtn>
-              <MDBBtn>Understood</MDBBtn>
             </MDBModalFooter>
           </MDBModalContent>
         </MDBModalDialog>

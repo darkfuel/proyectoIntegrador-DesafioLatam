@@ -6,7 +6,7 @@ import Swal from 'sweetalert2'
 import { ENDPOINT } from '../../config/constantes'
 
 export default function ModalEditUser () {
-  const { getNuevoUsuario } = useContext(userContext)
+  const { getNuevoUsuario, setNuevoUsuario } = useContext(userContext)
   const [staticModal, setStaticModal] = useState(false)
   const [userEdit, setUserEdit] = useState({
     nombre: '',
@@ -32,9 +32,6 @@ export default function ModalEditUser () {
     userData()
   }, [getNuevoUsuario]
   )
-
-  console.log(userEdit)
-  console.log(getNuevoUsuario)
   const toggleOpen = () => setStaticModal(!staticModal)
 
   const handleUser = (e) => {
@@ -55,6 +52,7 @@ export default function ModalEditUser () {
           text: 'Usuario editado con éxito!',
           icon: 'success'
         })
+        setNuevoUsuario(userEdit)
         setStaticModal(!staticModal)
       })
       .catch(error => {
@@ -84,7 +82,7 @@ export default function ModalEditUser () {
         <MDBModalDialog>
           <MDBModalContent>
             <MDBModalHeader>
-              <MDBModalTitle>Modal title</MDBModalTitle>
+              <MDBModalTitle>Editar perfil</MDBModalTitle>
               <MDBBtn className='btn-close' color='none' onClick={toggleOpen} />
             </MDBModalHeader>
             <MDBModalBody>
