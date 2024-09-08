@@ -48,13 +48,14 @@ export default function ModalEditUser () {
   const handleForm = (e) => {
     e.preventDefault()
     const token = window.sessionStorage.getItem('token')
-    axios.put(ENDPOINT.nuevoProducto, userEdit, { headers: { Authorization: `Bearer ${token}` } })
+    axios.put(ENDPOINT.editarUsuario, userEdit, { headers: { Authorization: `Bearer ${token}` } })
       .then(() => {
         Swal.fire({
           title: 'Good job!',
           text: 'Usuario editado con éxito!',
           icon: 'success'
         })
+        setStaticModal(!staticModal)
       })
       .catch(error => {
       // Manejo de error

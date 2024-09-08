@@ -6,6 +6,7 @@ import { Star, StarFill } from 'react-bootstrap-icons'
 import ProductoFiltro from '../components/ProductoFiltro.jsx'
 import { ProductContext } from '../context/ProductContext.jsx'
 import UserContext from '../context/UserContext.jsx'
+import ModalEditProduct from '../components/ModalEditProduct.jsx'
 // import { registrarUsuario } from '../../../Backend/src/models/models.user.js'
 
 const Productos = () => {
@@ -49,7 +50,7 @@ const Productos = () => {
       return (
         <>
           <Button variant='info' onClick={() => navigate(`/productos/${card.id}`)}>Ver Detalle</Button>
-          <Button>editar</Button>
+          <ModalEditProduct id={card.id} />
           <Button variant='danger' onClick={() => borrarProduct(card.id)}>borrar</Button>
         </>
       )
@@ -72,7 +73,6 @@ const Productos = () => {
 
               {console.log('Image path:', card.img)}
               <Card.Img variant='top' className='img-fluid' src={`http://localhost:3000${card.img}`} alt={card.nombre} />
-
 
               <Card.Body>
                 <Card.Title>{card.nombre}</Card.Title>

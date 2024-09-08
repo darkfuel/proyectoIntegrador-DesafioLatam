@@ -5,5 +5,7 @@ export const ENDPOINT = {
   login: `${URLBASE}/login`,
   users: `${URLBASE}/users`,
   productos: `${URLBASE}/productos`,
-  nuevoProducto: `${URLBASE}/nuevo-producto`
+  nuevoProducto: `${URLBASE}/nuevo-producto`,
+  editarUsuario: `${URLBASE}/editarUsuario`,
+  productosEdit: `${URLBASE}/productosEdit`
 }

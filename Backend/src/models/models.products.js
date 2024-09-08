@@ -41,3 +41,11 @@ export const updateFavorite = async (id) => {
     return await db(queryFalse, values)
   }
 }
+
+export const editarProducto = async ({ id, nombre, precio, stock, descripcion, idUser }) => {
+  console.log(id, nombre, precio, stock, descripcion, idUser)
+  const query = 'UPDATE productos SET nombre = $2, precio = $3, stock = $4, descripcion = $5, creado_por = $6 WHERE id = $1;'
+  const values = [id, nombre, precio, stock, descripcion, idUser]
+  const { rows } = await db(query, values)
+  return rows
+}
