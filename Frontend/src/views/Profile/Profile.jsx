@@ -3,8 +3,9 @@ import { useNavigate } from 'react-router-dom'
 import Context from '../../context/UserContext'
 import axios from 'axios'
 import './profile.css'
-import { MDBCard, MDBCardHeader, MDBCardSubTitle, MDBCardBody, MDBCardTitle, MDBCardText, MDBBtn } from 'mdb-react-ui-kit'
-import { ENDPOINT } from "../../config/constantes"
+import { MDBCard, MDBCardHeader, MDBCardSubTitle, MDBCardBody, MDBCardFooter, MDBCardTitle, MDBCardText } from 'mdb-react-ui-kit'
+import { ENDPOINT } from '../../config/constantes'
+import ModalEditUser from '../../components/Login/ModalEditUser'
 
 const Profile = () => {
   const navigate = useNavigate()
@@ -13,9 +14,9 @@ const Profile = () => {
   const getNuevoUsuarioData = () => {
     const token = window.sessionStorage.getItem('token')
     axios.get(ENDPOINT.users, { headers: { Authorization: `Bearer ${token}` } })
-    .then(({ data: [user] }) => {
-      setNuevoUsuario({ ...user })  // Si `data` es un objeto
-    })
+      .then(({ data: [user] }) => {
+        setNuevoUsuario({ ...user }) // Si `data` es un objeto
+      })
       // console.log('data perfil', user)
       .catch(({ response: { data } }) => {
         console.error(data)
@@ -46,7 +47,7 @@ const Profile = () => {
               </div>
             </div>
 
-            <div className='container'>
+            <div className='containerDatosPerfil'>
               <div className='mt-3'>
                 <MDBCardSubTitle className='subtituloPerfil fw-bold'>Email:</MDBCardSubTitle>
                 <MDBCardText>{getNuevoUsuario?.email}</MDBCardText>
@@ -58,10 +59,11 @@ const Profile = () => {
             </div>
 
             <div className='mt-3'>
-                <MDBCardSubTitle className='subtituloPerfil fw-bold'>Dirección:</MDBCardSubTitle>
-                <MDBCardText>{getNuevoUsuario?.direccion}</MDBCardText>
-              </div>
+              <MDBCardSubTitle className='subtituloPerfil fw-bold'>Dirección:</MDBCardSubTitle>
+              <MDBCardText>{getNuevoUsuario?.direccion}</MDBCardText>
+            </div>
           </MDBCardBody>
+          <MDBCardFooter className='text-muted'> <ModalEditUser /> </MDBCardFooter>
         </MDBCard>
 
         <img
