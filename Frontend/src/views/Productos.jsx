@@ -35,7 +35,7 @@ const Productos = () => {
   )
 
   const edit = (card) => {
-    if (getNuevoUsuario === null || !getNuevoUsuario.is_admin) {
+    if (!getNuevoUsuario || !getNuevoUsuario.is_admin) {
       return (
         <>
           <Button variant='info' onClick={() => navigate(`/productos/${card.id}`)}>Ver Detalle</Button>
