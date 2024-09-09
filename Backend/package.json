@@ -6,12 +6,17 @@
   "eslintConfig": {
     "extends": [
       "./node_modules/standard/eslintrc.json"
-    ]
+    ],
+    "env": {
+      "jest":true
+    }
   },
   "scripts": {
     "dev": "nodemon index.js",
     "start": "node index.js",
-    "test": "jest --forceExit"
+    "test": "vitest --run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest --coverage --run"
   },
   "keywords": [],
   "author": "",
@@ -30,9 +35,10 @@
     "pg-format": "^1.0.4"
   },
   "devDependencies": {
-    "jest": "^29.7.0",
+    "@vitest/coverage-v8": "^2.0.5",
     "nodemon": "^3.1.4",
     "standard": "^17.1.0",
-    "supertest": "^7.0.0"
+    "supertest": "^7.0.0",
+    "vitest": "^2.0.5"
   }
 }

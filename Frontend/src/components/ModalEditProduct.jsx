@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext } from 'react'
 import { MDBBtn, MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBModalTitle, MDBModalBody, MDBModalFooter, MDBInput, MDBCol, MDBRow } from 'mdb-react-ui-kit'
 import Swal from 'sweetalert2'
 import axios from 'axios'
@@ -18,18 +18,7 @@ export default function ModalEditProduct ({ id }) {
     descripcion: producto?.descripcion || ''
   })
 
-  console.log(productoEdit)
-  // const productData = () => {
-  //   if (producto) {
-  //     setProductoEdit({
-  //       nombre: producto.nombre,
-  //       precio: producto.precio,
-  //       stock: producto.stock,
-  //       descripcion: producto.descripcion
-  //     })
-  //   }
-  // }
-
+  console.log(producto)
   const toggleOpen = () => setStaticModal(!staticModal)
 
   const handleProduct = (e) => {
@@ -42,7 +31,28 @@ export default function ModalEditProduct ({ id }) {
 
   const editProduct = (e) => {
     e.preventDefault()
-    console.log('Datos a enviar:', productoEdit)
+
+    const validadorNum = /^\d*$/
+
+    if (
+      !String(productoEdit?.nombre || '').trim() ||
+      !String(productoEdit?.precio || '').trim() ||
+      !String(productoEdit?.stock || '').trim() ||
+      !String(productoEdit?.descripcion || '').trim()
+    ) {
+      return Swal.fire('Todos los campos son obligatorios')
+    }
+
+    if (
+      !validadorNum.test(productoEdit.precio) ||
+      !validadorNum.test(productoEdit.stock)
+    ) {
+      return Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Precio y stock deben ser números'
+      })
+    }
 
     if (!id) {
       console.error('ID no encontrado') // Agregar una verificación de id
@@ -52,8 +62,8 @@ export default function ModalEditProduct ({ id }) {
     axios.put(ENDPOINT.productosEdit, productoEdit, { headers: { Authorization: `Bearer ${token}` } })
       .then(() => {
         Swal.fire({
-          title: 'Good job!',
-          text: 'Usuario editado con éxito!',
+          title: 'Buen trabajo!',
+          text: 'Producto editado con éxito!',
           icon: 'success'
         })
 
@@ -145,16 +155,15 @@ export default function ModalEditProduct ({ id }) {
                     onChange={handleProduct}
                   />
 
-                  <MDBBtn type='submit'>Editar Usuario</MDBBtn>
+                  <MDBBtn type='submit'>Editar producto</MDBBtn>
                 </form>
               </div>
 
             </MDBModalBody>
             <MDBModalFooter>
               <MDBBtn color='secondary' onClick={toggleOpen}>
-                Close
+                Cerrar
               </MDBBtn>
-              <MDBBtn>Understood</MDBBtn>
             </MDBModalFooter>
           </MDBModalContent>
         </MDBModalDialog>

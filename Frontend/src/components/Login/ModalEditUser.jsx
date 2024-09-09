@@ -6,7 +6,7 @@ import Swal from 'sweetalert2'
 import { ENDPOINT } from '../../config/constantes'
 
 export default function ModalEditUser () {
-  const { getNuevoUsuario } = useContext(userContext)
+  const { getNuevoUsuario, setNuevoUsuario } = useContext(userContext)
   const [staticModal, setStaticModal] = useState(false)
   const [userEdit, setUserEdit] = useState({
     nombre: '',
@@ -15,6 +15,7 @@ export default function ModalEditUser () {
     email: '',
     direccion: ''
   })
+  console.log(getNuevoUsuario)
 
   const userData = () => {
     if (getNuevoUsuario) {
@@ -23,7 +24,8 @@ export default function ModalEditUser () {
         apellido: getNuevoUsuario.apellido,
         telefono: getNuevoUsuario.telefono,
         email: getNuevoUsuario.email,
-        direccion: getNuevoUsuario.direccion
+        direccion: getNuevoUsuario.direccion,
+        is_admin: getNuevoUsuario.is_admin
       })
     }
   }
@@ -32,9 +34,6 @@ export default function ModalEditUser () {
     userData()
   }, [getNuevoUsuario]
   )
-
-  console.log(userEdit)
-  console.log(getNuevoUsuario)
   const toggleOpen = () => setStaticModal(!staticModal)
 
   const handleUser = (e) => {
@@ -47,6 +46,36 @@ export default function ModalEditUser () {
 
   const handleForm = (e) => {
     e.preventDefault()
+
+    const validadorCaracteres = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/
+    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
+    const validadorTelefono = /^\+?\d{8,11}$/
+
+    if (
+      !userEdit?.nombre?.trim() ||
+      !userEdit?.apellido?.trim() ||
+      !userEdit?.telefono?.trim() ||
+      !userEdit?.email?.trim() ||
+      !userEdit?.direccion?.trim()
+    ) {
+      return window.alert('Todos los campos son obligatorios.')
+    }
+
+    if (!validadorCaracteres.test(userEdit.nombre)) {
+      return window.alert('El nombre solo puede contener letras.')
+    }
+
+    if (!validadorCaracteres.test(userEdit.apellido)) {
+      return window.alert('El apellido solo puede contener letras.')
+    }
+
+    if (!validadorTelefono.test(userEdit.telefono)) {
+      return window.alert('El número de teléfono debe tener entre 8 y 11 dígitos, y puede comenzar con un "+".')
+    }
+
+    if (!emailRegex.test(userEdit.email)) {
+      return window.alert('Por favor ingresa un email válido')
+    }
     const token = window.sessionStorage.getItem('token')
     axios.put(ENDPOINT.editarUsuario, userEdit, { headers: { Authorization: `Bearer ${token}` } })
       .then(() => {
@@ -55,6 +84,7 @@ export default function ModalEditUser () {
           text: 'Usuario editado con éxito!',
           icon: 'success'
         })
+        setNuevoUsuario(userEdit)
         setStaticModal(!staticModal)
       })
       .catch(error => {
@@ -84,7 +114,7 @@ export default function ModalEditUser () {
         <MDBModalDialog>
           <MDBModalContent>
             <MDBModalHeader>
-              <MDBModalTitle>Modal title</MDBModalTitle>
+              <MDBModalTitle>Editar perfil</MDBModalTitle>
               <MDBBtn className='btn-close' color='none' onClick={toggleOpen} />
             </MDBModalHeader>
             <MDBModalBody>

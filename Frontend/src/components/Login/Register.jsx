@@ -30,10 +30,10 @@ const Register = ({ setBasicActive }) => {
   const handleForm = (e) => {
     e.preventDefault()
 
-    const validadorCaracteres = /^[a-zA-Z\s]+$/
     const validadorPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/ // Expresión regular para la clave
+    const validadorCaracteres = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/
     const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
-    const validadorTelefono = /^\+\d{1,11}$/
+    const validadorTelefono = /^\+?\d{8,11}$/
 
     if (
       !user?.nombre?.trim() ||
