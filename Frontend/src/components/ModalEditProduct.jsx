@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext } from 'react'
 import { MDBBtn, MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBModalTitle, MDBModalBody, MDBModalFooter, MDBInput, MDBCol, MDBRow } from 'mdb-react-ui-kit'
 import Swal from 'sweetalert2'
 import axios from 'axios'
@@ -18,18 +18,7 @@ export default function ModalEditProduct ({ id }) {
     descripcion: producto?.descripcion || ''
   })
 
-  console.log(productoEdit)
-  // const productData = () => {
-  //   if (producto) {
-  //     setProductoEdit({
-  //       nombre: producto.nombre,
-  //       precio: producto.precio,
-  //       stock: producto.stock,
-  //       descripcion: producto.descripcion
-  //     })
-  //   }
-  // }
-
+  console.log(producto)
   const toggleOpen = () => setStaticModal(!staticModal)
 
   const handleProduct = (e) => {
@@ -46,12 +35,12 @@ export default function ModalEditProduct ({ id }) {
     const validadorNum = /^\d*$/
 
     if (
-      !productoEdit?.nombre?.trim() ||
-      !productoEdit?.precio?.trim() ||
-      !productoEdit?.stock?.trim() ||
-      !productoEdit?.descripcion?.trim()
+      !String(productoEdit?.nombre || '').trim() ||
+      !String(productoEdit?.precio || '').trim() ||
+      !String(productoEdit?.stock || '').trim() ||
+      !String(productoEdit?.descripcion || '').trim()
     ) {
-      return Swal.fire('Todos lo campos son obligatorios')
+      return Swal.fire('Todos los campos son obligatorios')
     }
 
     if (
