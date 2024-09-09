@@ -12,19 +12,11 @@ import ModalEditProduct from '../components/ModalEditProduct.jsx'
 const Productos = () => {
   const { addProduct, addFavorite, borrarProduct, productos, getData, filtro, setFiltro } = useContext(ProductContext)
   const navigate = useNavigate()
-  // const [filtro, setFiltro] = useState('')
 
   console.log(productos)
 
   useEffect(() => {
     getData()
-    // fetch('http://localhost:3000/productos')
-    //   .then(response => response.json())
-    //   .then(data => {
-    //     console.log(data)
-    //     setProductos(data.rows || [])
-    //   })
-    //   .catch(error => console.error('Error fetching data:', error))
   }, [])
 
   const { getNuevoUsuario } = useContext(UserContext)

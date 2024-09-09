@@ -49,7 +49,7 @@ export default function ModalEditUser () {
 
     const validadorCaracteres = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/
     const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
-    const validadorTelefono = /^\+?\d{8,11}$/
+    const validadorTelefono = /^\+\d{11}$/
 
     if (
       !userEdit?.nombre?.trim() ||
@@ -70,7 +70,7 @@ export default function ModalEditUser () {
     }
 
     if (!validadorTelefono.test(userEdit.telefono)) {
-      return window.alert('El número de teléfono debe tener entre 8 y 11 dígitos, y puede comenzar con un "+".')
+      return window.alert('El número de teléfono debe tener 9 dígitos, y puede comenzar con un "+56".')
     }
 
     if (!emailRegex.test(userEdit.email)) {
