@@ -20,15 +20,16 @@ const DetalleProducto = () => {
   }
 
   return (
-    <Container fluid className='mt-5'>
-      <Card>
-        <Card.Img variant='top' src={details.img || 'placeholder-image-url.jpg'} alt={details.nombre} />
-        <Card.Body>
+    <Container fluid className='mt-5 '>
+      <Card className='d-flex flex-row gap-5 justify-content-center align-self-center'>
+        <Card.Img variant='top' src={`http://localhost:3000${details.img}`} alt={details.nombre} className='w-25 m-5' />
+        {/* <Card.Img variant='top' src={details.img || 'placeholder-image-url.jpg'} alt={details.nombre} /> */}
+        <Card.Body className=''>
           <Card.Title>{details.nombre}</Card.Title>
           <Card.Text>{details.descripcion}</Card.Text>
           <Card.Text>Precio: ${details.precio}</Card.Text>
-          <Button variant='secondary' className='m-4 col-md-1' onClick={() => addProduct(details)}>Agregar</Button>
-          <Button variant='info' className='m-4 col-md-1' onClick={() => navigate('/productos')}>Volver</Button>
+          <Button variant='secondary' className='m-2' onClick={() => addProduct(details)}>Agregar</Button>
+          <Button variant='info' className='m-2' onClick={() => navigate('/productos')}>Volver</Button>
         </Card.Body>
       </Card>
     </Container>
