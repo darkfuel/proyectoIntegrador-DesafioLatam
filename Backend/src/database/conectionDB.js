@@ -11,7 +11,8 @@ const pool = new Pool({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE,
   port: process.env.DB_PORT,
-  allowExitOnIdle: true
+  allowExitOnIdle: true,
+  ssl: true
 })
 
 export const db = async (query, values) => {
